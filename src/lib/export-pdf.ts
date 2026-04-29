@@ -23,7 +23,7 @@ export async function exportCalendarPdf(
     });
     const img = canvas.toDataURL("image/jpeg", 0.92);
 
-    const margin = 10;
+    const margin = 0;
     const maxW = pageW - margin * 2;
     const maxH = pageH - margin * 2;
     const ratio = canvas.width / canvas.height;

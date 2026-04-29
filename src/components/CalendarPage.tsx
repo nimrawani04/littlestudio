@@ -528,7 +528,7 @@ export function CalendarPage({
       className={cn(
         `tpl-${template}`,
         "relative w-full overflow-hidden shadow-elegant",
-        isLandscape ? "aspect-[4/3]" : "aspect-[3/4]",
+        isLandscape ? "aspect-[297/210]" : "aspect-[210/297]",
         className,
       )}
       style={{

@@ -19,7 +19,7 @@ import {
 } from "@/lib/calendar-utils";
 import { emptyMonthCustomization, type MonthCustomization } from "@/lib/custom-types";
 import { cn } from "@/lib/utils";
-import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Sparkles, Trash2, Upload } from "lucide-react";
+import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Sparkles, Trash2, Upload, Maximize2 } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -45,6 +45,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     () => Array.from({ length: 12 }, () => emptyMonthCustomization()),
   );
   const [editorOpen, setEditorOpen] = useState(false);
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
   const setMonthCustomization = (i: number, m: MonthCustomization) =>
     setCustomizations((prev) => prev.map((c, idx) => (idx === i ? m : c)));
@@ -324,7 +325,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
         <section>
           {/* Active month preview */}
           <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
-            <div className="relative mx-auto w-full max-w-md">
+            <div className="relative mx-auto w-full max-w-md group">
               <CalendarPage 
                 {...previewProps(activeMonth)} 
                 onImageClick={() => document.getElementById("active-month-upload")?.click()}
@@ -340,6 +341,44 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 textInput=""
                 readOnly
               />
+              <Dialog open={fullscreenOpen} onOpenChange={setFullscreenOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="secondary" 
+                    size="icon" 
+                    className="absolute right-2 top-2 z-30 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Fullscreen Preview"
+                  >
+                    <Maximize2 className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 overflow-hidden bg-transparent border-none shadow-none flex items-center justify-center">
+                  <DialogTitle className="sr-only">Fullscreen Preview</DialogTitle>
+                  <div className="relative flex items-center justify-center w-full h-full max-h-[95vh]">
+                    <div 
+                      className="relative shadow-2xl shrink-0" 
+                      style={{ 
+                        width: orientation === "landscape" ? "1200px" : "900px", 
+                        transform: `scale(min(calc(90vw / ${orientation === "landscape" ? 1200 : 900}), calc(90vh / ${orientation === "landscape" ? 848 : 1273})))`,
+                        transformOrigin: "center"
+                      }}
+                    >
+                      <CalendarPage {...previewProps(activeMonth)} />
+                      <CustomOverlay
+                        customization={customizations[activeMonth]}
+                        onChange={() => {}}
+                        tool="select"
+                        drawColor="#000" drawWidth={1}
+                        stickerEmoji="" stickerSize={48}
+                        textColor="#000" textFont="Inter" textSize={24}
+                        textInput=""
+                        readOnly
+                        refWidth={orientation === "landscape" ? 1200 : 900}
+                      />
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
             <div className="space-y-3">
               <div>
