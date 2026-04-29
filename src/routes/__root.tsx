@@ -29,14 +29,13 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Pixel Studio — Calendar & Photo Booth" },
+      { name: "description", content: "Create calendars & take pixel photo booth strips" },
+      { name: "author", content: "Pixel Studio" },
+      { property: "og:title", content: "Pixel Studio" },
+      { property: "og:description", content: "Calendar designer & Minecraft photo booth" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -44,7 +43,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;700&family=Dancing+Script:wght@400;700&family=Caveat:wght@400;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;700&family=Dancing+Script:wght@400;700&family=Caveat:wght@400;700&family=Press+Start+2P&display=swap",
       },
     ],
   }),

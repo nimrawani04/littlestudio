@@ -121,6 +121,21 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     imagePosition,
     textAlign,
     orientation,
+    titleFont: customizations[i].titleFont,
+    titleSize: customizations[i].titleSize,
+    titleColor: customizations[i].titleColor,
+    titleX: customizations[i].titleX,
+    titleY: customizations[i].titleY,
+    weekdaysFont: customizations[i].weekdaysFont,
+    weekdaysSize: customizations[i].weekdaysSize,
+    weekdaysColor: customizations[i].weekdaysColor,
+    weekdaysX: customizations[i].weekdaysX,
+    weekdaysY: customizations[i].weekdaysY,
+    datesFont: customizations[i].datesFont,
+    datesSize: customizations[i].datesSize,
+    datesColor: customizations[i].datesColor,
+    datesX: customizations[i].datesX,
+    datesY: customizations[i].datesY,
   });
 
   return (
@@ -310,7 +325,10 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
           {/* Active month preview */}
           <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
             <div className="relative mx-auto w-full max-w-md">
-              <CalendarPage {...previewProps(activeMonth)} />
+              <CalendarPage 
+                {...previewProps(activeMonth)} 
+                onImageClick={() => document.getElementById("active-month-upload")?.click()}
+              />
               {/* Read-only overlay so previews show stickers/drawings/frame */}
               <CustomOverlay
                 customization={customizations[activeMonth]}
@@ -334,12 +352,47 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 <Upload className="h-4 w-4" />
                 {images[activeMonth] ? "Replace photo" : "Upload photo"}
                 <input
+                  id="active-month-upload"
                   type="file"
                   accept="image/*"
                   className="hidden"
                   onChange={(e) => {
                     const f = e.target.files?.[0];
                     if (f) handleFile(activeMonth, f);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium transition-colors hover:bg-secondary/80">
+                <ImageIcon className="h-4 w-4" />
+                Bulk upload photos
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files || []);
+                    const imgFiles = files.filter(f => f.type.startsWith("image/"));
+                    if (imgFiles.length > 0) {
+                      const maxFiles = Math.min(imgFiles.length, 12);
+                      const nextImages = [...images];
+                      
+                      let loaded = 0;
+                      imgFiles.slice(0, maxFiles).forEach((file, index) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          nextImages[index] = reader.result as string;
+                          loaded++;
+                          if (loaded === maxFiles) {
+                            setImages(nextImages);
+                            toast.success(`Uploaded ${loaded} photos! (Assigned to Jan – ${MONTH_NAMES[loaded-1]})`);
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      });
+                    }
                     e.target.value = "";
                   }}
                 />
@@ -364,7 +417,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                     <Sparkles className="mr-2 h-4 w-4" /> Customize this month
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-5xl">
+                <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>
                       Customize {MONTH_NAMES[activeMonth]} — stickers, draw, text & frames
@@ -375,6 +428,25 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                     customization={customizations[activeMonth]}
                     onChange={(m) => setMonthCustomization(activeMonth, m)}
                     onClear={() => setMonthCustomization(activeMonth, emptyMonthCustomization())}
+                    onApplyToAll={(m) => {
+                      setCustomizations((prev) => 
+                        prev.map((c) => ({
+                          ...c,
+                          titleFont: m.titleFont,
+                          titleSize: m.titleSize,
+                          titleColor: m.titleColor,
+                          weekdaysFont: m.weekdaysFont,
+                          weekdaysSize: m.weekdaysSize,
+                          weekdaysColor: m.weekdaysColor,
+                          datesFont: m.datesFont,
+                          datesSize: m.datesSize,
+                          datesColor: m.datesColor,
+                          frame: m.frame,
+                          frameColor: m.frameColor,
+                        }))
+                      );
+                      toast.success("Applied styles to all 12 months!");
+                    }}
                   />
                 </DialogContent>
               </Dialog>

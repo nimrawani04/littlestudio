@@ -24,6 +24,16 @@ export interface CustomSticker {
   rotation: number;
 }
 
+export interface CustomImage {
+  id: string;
+  kind: "image";
+  x: number;
+  y: number;
+  src: string; // DataURL
+  size: number;
+  rotation: number;
+}
+
 export interface CustomStroke {
   id: string;
   kind: "stroke";
@@ -32,12 +42,27 @@ export interface CustomStroke {
   points: { x: number; y: number }[]; // normalized 0..1
 }
 
-export type CustomItem = CustomText | CustomSticker | CustomStroke;
+export type CustomItem = CustomText | CustomSticker | CustomStroke | CustomImage;
 
 export interface MonthCustomization {
   items: CustomItem[];
   frame: FrameStyle;
   frameColor: string;
+  titleFont?: string;
+  titleSize?: number;
+  titleColor?: string;
+  titleX?: number;
+  titleY?: number;
+  weekdaysFont?: string;
+  weekdaysSize?: number;
+  weekdaysColor?: string;
+  weekdaysX?: number;
+  weekdaysY?: number;
+  datesFont?: string;
+  datesSize?: number;
+  datesColor?: string;
+  datesX?: number;
+  datesY?: number;
 }
 
 export const emptyMonthCustomization = (): MonthCustomization => ({

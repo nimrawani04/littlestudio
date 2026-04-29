@@ -28,6 +28,14 @@ export const TEMPLATES = [
   { id: "bold", name: "Bold Modern", desc: "Dark & striking" },
   { id: "vintage", name: "Vintage", desc: "Warm sepia tones" },
   { id: "playful", name: "Playful", desc: "Soft pink script" },
+  { id: "poster-arched", name: "Poster Arched", desc: "Arched frame with large number" },
+  { id: "vintage-poster", name: "Vintage Poster", desc: "Rectangular bordered image" },
+  { id: "quote-landscape", name: "Quote Style", desc: "Image with quote & overlay" },
+  { id: "artistic-ox", name: "Artistic Ox", desc: "Boxed month header" },
+  { id: "artistic-tiger", name: "Artistic Tiger", desc: "Clean illustration focus" },
+  { id: "retro-bold", name: "Retro Bold", desc: "Large typography, vibrant" },
+  { id: "minimal-split", name: "Minimal Split", desc: "50/50 clean split" },
+  { id: "scrapbook", name: "Scrapbook", desc: "Tape effects & polaroid" },
 ] as const;
 
 export type TemplateId = typeof TEMPLATES[number]["id"];

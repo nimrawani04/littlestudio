@@ -1,20 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CalendarDesigner } from "@/components/CalendarDesigner";
+import { LandingHub } from "@/components/LandingHub";
 import { exportCalendarPdf } from "@/lib/export-pdf";
 
+type IndexSearch = { mode?: string };
+
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): IndexSearch => ({
+    mode: (search.mode as string) || undefined,
+  }),
   head: () => ({
     meta: [
-      { title: "Photo Calendar Studio — Design & Print Your Year" },
+      { title: "Pixel Studio — Calendar Designer & Photo Booth" },
       {
         name: "description",
         content:
-          "Create a beautiful 12-month photo calendar. Pick a template, add your photos, customize fonts and colors, and download a print-ready PDF.",
+          "Create beautiful photo calendars or step into a Minecraft-style virtual photo booth. Design, capture, decorate, and download!",
       },
-      { property: "og:title", content: "Photo Calendar Studio" },
+      { property: "og:title", content: "Pixel Studio" },
       {
         property: "og:description",
-        content: "Design a personalized 12-month photo calendar and export it as a print-ready PDF.",
+        content: "Calendar designer & photo booth in a cute Minecraft pixel world.",
       },
     ],
   }),
@@ -22,5 +28,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return <CalendarDesigner onExport={(els, orientation) => exportCalendarPdf(els, orientation, "my-calendar.pdf")} />;
+  const { mode } = Route.useSearch();
+
+  if (mode === "calendar") {
+    return <CalendarDesigner onExport={(els, orientation) => exportCalendarPdf(els, orientation, "my-calendar.pdf")} />;
+  }
+
+  return <LandingHub />;
 }

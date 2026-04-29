@@ -22,10 +22,9 @@ interface Props {
   textFont: string;
   textSize: number;
   textInput: string;
-  /** when true, hide handles/selection chrome (used for export & thumbnails) */
   readOnly?: boolean;
-  /** reference width for normalizing brush size (default 900px) */
   refWidth?: number;
+  onElementClick?: (elementId: "title" | "weekdays" | "dates") => void;
 }
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -44,6 +43,7 @@ export function CustomOverlay({
   textInput,
   readOnly = false,
   refWidth = 900,
+  onElementClick,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -174,6 +174,7 @@ export function CustomOverlay({
       style={{
         ...frameStyleToCss(customization.frame, customization.frameColor),
         touchAction: "none",
+        pointerEvents: tool === "select" ? "none" : "auto",
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -227,12 +228,43 @@ export function CustomOverlay({
               >
                 <span style={{ fontSize: "inherit" }}>{item.emoji}</span>
                 {isSelected && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); removeItem(item.id); }}
-                    className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
+                  <>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); removeItem(item.id); }}
+                      className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white z-30"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                    <div className="absolute -bottom-8 left-1/2 flex -translate-x-1/2 gap-1 bg-background/90 p-1 rounded border shadow-md text-xs pointer-events-auto z-30">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: Math.max(10, item.size - 10) });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        -
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: item.size + 10 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { rotation: (item.rotation + 15) % 360 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 text-[10px]"
+                      >
+                        ↻
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             );
@@ -255,12 +287,94 @@ export function CustomOverlay({
               >
                 {item.text}
                 {isSelected && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); removeItem(item.id); }}
-                    className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
+                  <>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); removeItem(item.id); }}
+                      className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white z-30"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                    <div className="absolute -bottom-8 left-1/2 flex -translate-x-1/2 gap-1 bg-background/90 p-1 rounded border shadow-md text-xs pointer-events-auto z-30">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: Math.max(10, item.size - 10) });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        -
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: item.size + 10 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { rotation: (item.rotation + 15) % 360 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 text-[10px]"
+                      >
+                        ↻
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          }
+          if (item.kind === "image") {
+            return (
+              <div
+                key={item.id}
+                style={{ ...common, width: item.size * scale }}
+                onPointerDown={onItemDown}
+                className={cn(isSelected && "outline outline-2 outline-primary outline-offset-2")}
+              >
+                <img src={item.src} alt="" className="w-full h-auto pointer-events-none" />
+                {isSelected && (
+                  <>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); removeItem(item.id); }}
+                      className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white z-30"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                    <div className="absolute -bottom-8 left-1/2 flex -translate-x-1/2 gap-1 bg-background/90 p-1 rounded border shadow-md text-xs pointer-events-auto z-30">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: Math.max(10, item.size - 10) });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        -
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { size: item.size + 10 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 font-bold"
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem(item.id, { rotation: (item.rotation + 15) % 360 });
+                        }}
+                        className="h-5 w-5 flex items-center justify-center border rounded bg-secondary hover:bg-secondary/80 text-[10px]"
+                      >
+                        ↻
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             );
