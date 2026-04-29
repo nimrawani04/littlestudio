@@ -9,6 +9,7 @@ import {
   MONTH_NAMES,
   TEMPLATES,
   type ImagePosition,
+  type Orientation,
   type TemplateId,
   type TextAlign,
   type WeekStart,
@@ -19,7 +20,7 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
 interface DesignerProps {
-  onExport: (months: HTMLDivElement[]) => Promise<void>;
+  onExport: (months: HTMLDivElement[], orientation: Orientation) => Promise<void>;
 }
 
 export function CalendarDesigner({ onExport }: DesignerProps) {
