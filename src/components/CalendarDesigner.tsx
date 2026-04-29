@@ -214,6 +214,32 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 </SelectContent>
               </Select>
             </div>
+            <div>
+              <Label className="mb-2 block text-xs">Orientation</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {(["portrait", "landscape"] as const).map((o) => (
+                  <button
+                    key={o}
+                    type="button"
+                    onClick={() => setOrientation(o)}
+                    className={cn(
+                      "flex flex-col items-center gap-1.5 rounded-md border-2 p-2 text-xs capitalize transition-all",
+                      orientation === o
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "rounded-sm border-2 border-current",
+                        o === "portrait" ? "h-6 w-[18px]" : "h-[18px] w-6",
+                      )}
+                    />
+                    {o}
+                  </button>
+                ))}
+              </div>
+            </div>
           </section>
 
           <section className="space-y-4">
