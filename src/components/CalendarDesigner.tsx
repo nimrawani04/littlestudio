@@ -32,6 +32,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
   const [colorId, setColorId] = useState<string>("default");
   const [imagePosition, setImagePosition] = useState<ImagePosition>("top");
   const [textAlign, setTextAlign] = useState<TextAlign>("center");
+  const [orientation, setOrientation] = useState<Orientation>("portrait");
   const [images, setImages] = useState<(string | null)[]>(Array(12).fill(null));
   const [activeMonth, setActiveMonth] = useState(0);
   const [swapSource, setSwapSource] = useState<number | null>(null);
@@ -86,7 +87,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     setExporting(true);
     try {
       const els = pageRefs.current.filter((e): e is HTMLDivElement => !!e);
-      await onExport(els);
+      await onExport(els, orientation);
       toast.success("Calendar PDF downloaded");
     } catch (e) {
       console.error(e);
@@ -108,6 +109,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     accent: color.accent || undefined,
     imagePosition,
     textAlign,
+    orientation,
   });
 
   return (
