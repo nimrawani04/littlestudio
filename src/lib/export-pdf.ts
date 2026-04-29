@@ -1,10 +1,14 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import type { Orientation } from "./calendar-utils";
 
-export async function exportCalendarPdf(pages: HTMLElement[], filename = "calendar.pdf") {
+export async function exportCalendarPdf(
+  pages: HTMLElement[],
+  orientation: Orientation = "portrait",
+  filename = "calendar.pdf",
+) {
   if (!pages.length) return;
-  // A4 portrait: 210 x 297 mm
-  const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const pdf = new jsPDF({ orientation, unit: "mm", format: "a4" });
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
 
@@ -17,7 +21,6 @@ export async function exportCalendarPdf(pages: HTMLElement[], filename = "calend
     });
     const img = canvas.toDataURL("image/jpeg", 0.92);
 
-    // fit canvas inside page (preserve aspect ratio, leave 10mm margin)
     const margin = 10;
     const maxW = pageW - margin * 2;
     const maxH = pageH - margin * 2;

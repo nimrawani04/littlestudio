@@ -8,21 +8,23 @@ import {
   type TemplateId,
   type ImagePosition,
   type TextAlign,
+  type Orientation,
 } from "@/lib/calendar-utils";
 import { cn } from "@/lib/utils";
 
 export interface CalendarPageProps {
   year: number;
-  monthIndex: number; // 0-11
+  monthIndex: number;
   template: TemplateId;
   weekStart: WeekStart;
   image?: string | null;
-  fontFamily?: string; // override
+  fontFamily?: string;
   bg?: string;
   text?: string;
   accent?: string;
   imagePosition: ImagePosition;
   textAlign: TextAlign;
+  orientation?: Orientation;
   showWeekdays?: boolean;
   className?: string;
 }
@@ -39,6 +41,7 @@ export function CalendarPage({
   accent,
   imagePosition,
   textAlign,
+  orientation = "portrait",
   showWeekdays = true,
   className,
 }: CalendarPageProps) {
@@ -48,7 +51,6 @@ export function CalendarPage({
   );
   const weekdayLabels = weekStart === "monday" ? WEEKDAYS_MON : WEEKDAYS_SUN;
 
-  // Inline overrides applied on top of template CSS variables
   const styleOverrides: React.CSSProperties = {};
   if (bg) (styleOverrides as Record<string, string>)["--cal-bg"] = bg;
   if (text) (styleOverrides as Record<string, string>)["--cal-text"] = text;
@@ -60,10 +62,81 @@ export function CalendarPage({
 
   const isBg = imagePosition === "background";
   const isFramed = imagePosition === "framed";
+  const isLandscape = orientation === "landscape";
+  // In landscape, "top"/"bottom" become "left"/"right" side panels
+  const sideImage = isLandscape && (imagePosition === "top" || imagePosition === "bottom");
+  const sideOnRight = isLandscape && imagePosition === "bottom";
+
+  const titleBlock = (
+    <div
+      className={cn(
+        "px-[6%] py-[3%]",
+        textAlign === "center" && "text-center",
+        textAlign === "right" && "text-right",
+      )}
+      style={{ fontFamily: "var(--cal-font-title)" }}
+    >
+      <h2
+        style={{
+          fontSize: "var(--cal-title-size)",
+          fontWeight: "var(--cal-title-weight)" as unknown as number,
+          letterSpacing: "var(--cal-title-tracking)",
+          textTransform: "var(--cal-title-transform)" as React.CSSProperties["textTransform"],
+          lineHeight: 1.05,
+          color: isBg ? "white" : "var(--cal-text)",
+        }}
+      >
+        {MONTH_NAMES[monthIndex]}
+      </h2>
+      <div
+        className="mt-1 text-sm tracking-widest opacity-70"
+        style={{ color: isBg ? "white" : "var(--cal-muted)" }}
+      >
+        {year}
+      </div>
+    </div>
+  );
+
+  const dateGrid = (
+    <div className="flex-1 px-[6%] py-[3%]">
+      {showWeekdays && (
+        <div className="mb-2 grid grid-cols-7 gap-1 text-center text-[0.65rem] font-semibold uppercase tracking-wider opacity-70">
+          {weekdayLabels.map((d) => (
+            <div key={d}>{d}</div>
+          ))}
+        </div>
+      )}
+      <div className="grid grid-cols-7 gap-1 text-center">
+        {grid.map((d, i) => (
+          <div
+            key={i}
+            className="flex aspect-square items-center justify-center text-sm tabular-nums"
+            style={{ color: d ? undefined : "transparent" }}
+          >
+            {d ?? "·"}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const divider = (
+    <div className="px-[6%]">
+      <div
+        className="h-px w-full"
+        style={{ background: isBg ? "rgba(255,255,255,0.4)" : "var(--cal-border)" }}
+      />
+    </div>
+  );
 
   return (
     <div
-      className={cn(`tpl-${template}`, "relative aspect-[3/4] w-full overflow-hidden shadow-elegant", className)}
+      className={cn(
+        `tpl-${template}`,
+        "relative w-full overflow-hidden shadow-elegant",
+        isLandscape ? "aspect-[4/3]" : "aspect-[3/4]",
+        className,
+      )}
       style={{
         backgroundColor: "var(--cal-bg)",
         color: "var(--cal-text)",
@@ -78,99 +151,79 @@ export function CalendarPage({
         </>
       )}
 
-      <div className={cn("relative z-10 flex h-full flex-col", isBg && "text-white")}>
-        {/* Image area - top */}
-        {imagePosition === "top" && (
-          <div className="h-[45%] w-full overflow-hidden bg-[var(--cal-border)]">
-            {image ? (
-              <img src={image} alt="" className="h-full w-full object-cover" />
-            ) : (
-              <EmptyImage />
-            )}
-          </div>
-        )}
-
-        {/* Framed image */}
-        {isFramed && image && (
-          <div className="px-[8%] pt-[6%]">
-            <div className="overflow-hidden border-4 border-[var(--cal-border)] bg-[var(--cal-border)] shadow-md" style={{ aspectRatio: "16/10" }}>
-              <img src={image} alt="" className="h-full w-full object-cover" />
-            </div>
-          </div>
-        )}
-        {isFramed && !image && (
-          <div className="px-[8%] pt-[6%]">
-            <div className="border-4 border-dashed border-[var(--cal-border)]" style={{ aspectRatio: "16/10" }}>
-              <EmptyImage />
-            </div>
-          </div>
-        )}
-
-        {/* Title */}
-        <div
-          className={cn("px-[8%] py-[3%]", textAlign === "center" && "text-center", textAlign === "right" && "text-right")}
-          style={{
-            fontFamily: "var(--cal-font-title)",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: "var(--cal-title-size)",
-              fontWeight: "var(--cal-title-weight)" as unknown as number,
-              letterSpacing: "var(--cal-title-tracking)",
-              textTransform: "var(--cal-title-transform)" as React.CSSProperties["textTransform"],
-              lineHeight: 1.05,
-              color: isBg ? "white" : "var(--cal-text)",
-            }}
-          >
-            {MONTH_NAMES[monthIndex]}
-          </h2>
-          <div
-            className="mt-1 text-sm tracking-widest opacity-70"
-            style={{ color: isBg ? "white" : "var(--cal-muted)" }}
-          >
-            {year}
-          </div>
-        </div>
-
-        {/* Decorative divider */}
-        <div className="px-[8%]">
-          <div className="h-px w-full" style={{ background: isBg ? "rgba(255,255,255,0.4)" : "var(--cal-border)" }} />
-        </div>
-
-        {/* Date grid */}
-        <div className={cn("flex-1 px-[8%] py-[3%]")}>
-          {showWeekdays && (
-            <div className="mb-2 grid grid-cols-7 gap-1 text-center text-[0.65rem] font-semibold uppercase tracking-wider opacity-70">
-              {weekdayLabels.map((d) => (
-                <div key={d}>{d}</div>
-              ))}
+      {/* LANDSCAPE side-by-side layout */}
+      {sideImage ? (
+        <div className={cn("relative z-10 flex h-full", isBg && "text-white")}>
+          {!sideOnRight && (
+            <div className="h-full w-1/2 overflow-hidden bg-[var(--cal-border)]">
+              {image ? (
+                <img src={image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <EmptyImage />
+              )}
             </div>
           )}
-          <div className="grid grid-cols-7 gap-1 text-center">
-            {grid.map((d, i) => (
-              <div
-                key={i}
-                className="flex aspect-square items-center justify-center text-sm tabular-nums"
-                style={{ color: d ? undefined : "transparent" }}
-              >
-                {d ?? "·"}
-              </div>
-            ))}
+          <div className="flex h-full w-1/2 flex-col">
+            {titleBlock}
+            {divider}
+            {dateGrid}
           </div>
+          {sideOnRight && (
+            <div className="h-full w-1/2 overflow-hidden bg-[var(--cal-border)]">
+              {image ? (
+                <img src={image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <EmptyImage />
+              )}
+            </div>
+          )}
         </div>
+      ) : (
+        /* PORTRAIT or background/framed in any orientation: stacked layout */
+        <div className={cn("relative z-10 flex h-full flex-col", isBg && "text-white")}>
+          {imagePosition === "top" && (
+            <div className={cn("w-full overflow-hidden bg-[var(--cal-border)]", isLandscape ? "h-[35%]" : "h-[45%]")}>
+              {image ? (
+                <img src={image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <EmptyImage />
+              )}
+            </div>
+          )}
 
-        {/* Image area - bottom */}
-        {imagePosition === "bottom" && (
-          <div className="h-[35%] w-full overflow-hidden bg-[var(--cal-border)]">
-            {image ? (
-              <img src={image} alt="" className="h-full w-full object-cover" />
-            ) : (
-              <EmptyImage />
-            )}
-          </div>
-        )}
-      </div>
+          {isFramed && (
+            <div className="px-[8%] pt-[4%]">
+              <div
+                className={cn(
+                  "overflow-hidden border-4 border-[var(--cal-border)] bg-[var(--cal-border)] shadow-md",
+                  !image && "border-dashed",
+                )}
+                style={{ aspectRatio: isLandscape ? "21/9" : "16/10" }}
+              >
+                {image ? (
+                  <img src={image} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <EmptyImage />
+                )}
+              </div>
+            </div>
+          )}
+
+          {titleBlock}
+          {divider}
+          {dateGrid}
+
+          {imagePosition === "bottom" && (
+            <div className={cn("w-full overflow-hidden bg-[var(--cal-border)]", isLandscape ? "h-[30%]" : "h-[35%]")}>
+              {image ? (
+                <img src={image} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <EmptyImage />
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

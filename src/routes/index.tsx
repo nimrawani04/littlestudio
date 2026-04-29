@@ -22,5 +22,5 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return <CalendarDesigner onExport={(els) => exportCalendarPdf(els, "my-calendar.pdf")} />;
+  return <CalendarDesigner onExport={(els, orientation) => exportCalendarPdf(els, orientation, "my-calendar.pdf")} />;
 }

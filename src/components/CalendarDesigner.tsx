@@ -9,6 +9,7 @@ import {
   MONTH_NAMES,
   TEMPLATES,
   type ImagePosition,
+  type Orientation,
   type TemplateId,
   type TextAlign,
   type WeekStart,
@@ -19,7 +20,7 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
 interface DesignerProps {
-  onExport: (months: HTMLDivElement[]) => Promise<void>;
+  onExport: (months: HTMLDivElement[], orientation: Orientation) => Promise<void>;
 }
 
 export function CalendarDesigner({ onExport }: DesignerProps) {
@@ -31,6 +32,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
   const [colorId, setColorId] = useState<string>("default");
   const [imagePosition, setImagePosition] = useState<ImagePosition>("top");
   const [textAlign, setTextAlign] = useState<TextAlign>("center");
+  const [orientation, setOrientation] = useState<Orientation>("portrait");
   const [images, setImages] = useState<(string | null)[]>(Array(12).fill(null));
   const [activeMonth, setActiveMonth] = useState(0);
   const [swapSource, setSwapSource] = useState<number | null>(null);
@@ -85,7 +87,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     setExporting(true);
     try {
       const els = pageRefs.current.filter((e): e is HTMLDivElement => !!e);
-      await onExport(els);
+      await onExport(els, orientation);
       toast.success("Calendar PDF downloaded");
     } catch (e) {
       console.error(e);
@@ -107,6 +109,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
     accent: color.accent || undefined,
     imagePosition,
     textAlign,
+    orientation,
   });
 
   return (
@@ -210,6 +213,32 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                   <SelectItem value="sunday">Sunday</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              <Label className="mb-2 block text-xs">Orientation</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {(["portrait", "landscape"] as const).map((o) => (
+                  <button
+                    key={o}
+                    type="button"
+                    onClick={() => setOrientation(o)}
+                    className={cn(
+                      "flex flex-col items-center gap-1.5 rounded-md border-2 p-2 text-xs capitalize transition-all",
+                      orientation === o
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "rounded-sm border-2 border-current",
+                        o === "portrait" ? "h-6 w-[18px]" : "h-[18px] w-6",
+                      )}
+                    />
+                    {o}
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
 
@@ -346,7 +375,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
               <div
                 key={i}
                 ref={(el) => { pageRefs.current[i] = el; }}
-                style={{ width: "900px" }}
+                style={{ width: orientation === "landscape" ? "1200px" : "900px" }}
               >
                 <CalendarPage {...previewProps(i)} />
               </div>
