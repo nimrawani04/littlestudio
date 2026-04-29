@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { CalendarPage } from "@/components/CalendarPage";
+import { CustomEditor } from "@/components/CustomEditor";
+import { CustomOverlay } from "@/components/CustomOverlay";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   COLOR_PRESETS,
   FONT_OPTIONS,
@@ -14,8 +17,9 @@ import {
   type TextAlign,
   type WeekStart,
 } from "@/lib/calendar-utils";
+import { emptyMonthCustomization, type MonthCustomization } from "@/lib/custom-types";
 import { cn } from "@/lib/utils";
-import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Trash2, Upload } from "lucide-react";
+import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Sparkles, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -37,6 +41,13 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
   const [activeMonth, setActiveMonth] = useState(0);
   const [swapSource, setSwapSource] = useState<number | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [customizations, setCustomizations] = useState<MonthCustomization[]>(
+    () => Array.from({ length: 12 }, () => emptyMonthCustomization()),
+  );
+  const [editorOpen, setEditorOpen] = useState(false);
+
+  const setMonthCustomization = (i: number, m: MonthCustomization) =>
+    setCustomizations((prev) => prev.map((c, idx) => (idx === i ? m : c)));
 
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -298,8 +309,19 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
         <section>
           {/* Active month preview */}
           <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
-            <div className="mx-auto w-full max-w-md">
+            <div className="relative mx-auto w-full max-w-md">
               <CalendarPage {...previewProps(activeMonth)} />
+              {/* Read-only overlay so previews show stickers/drawings/frame */}
+              <CustomOverlay
+                customization={customizations[activeMonth]}
+                onChange={() => {}}
+                tool="select"
+                drawColor="#000" drawWidth={1}
+                stickerEmoji="" stickerSize={48}
+                textColor="#000" textFont="Inter" textSize={24}
+                textInput=""
+                readOnly
+              />
             </div>
             <div className="space-y-3">
               <div>
@@ -335,6 +357,27 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 <ArrowLeftRight className="mr-2 h-4 w-4" />
                 {swapSource === activeMonth ? "Cancel swap" : "Swap with…"}
               </Button>
+
+              <Dialog open={editorOpen} onOpenChange={setEditorOpen}>
+                <DialogTrigger asChild>
+                  <Button className="w-full" variant="secondary">
+                    <Sparkles className="mr-2 h-4 w-4" /> Customize this month
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-5xl">
+                  <DialogHeader>
+                    <DialogTitle>
+                      Customize {MONTH_NAMES[activeMonth]} — stickers, draw, text & frames
+                    </DialogTitle>
+                  </DialogHeader>
+                  <CustomEditor
+                    pageProps={previewProps(activeMonth)}
+                    customization={customizations[activeMonth]}
+                    onChange={(m) => setMonthCustomization(activeMonth, m)}
+                    onClear={() => setMonthCustomization(activeMonth, emptyMonthCustomization())}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
 
@@ -356,7 +399,19 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                   swapSource === i && "ring-2 ring-accent-foreground",
                 )}
               >
-                <CalendarPage {...previewProps(i)} className="!shadow-none" />
+                <div className="relative">
+                  <CalendarPage {...previewProps(i)} className="!shadow-none" />
+                  <CustomOverlay
+                    customization={customizations[i]}
+                    onChange={() => {}}
+                    tool="select"
+                    drawColor="#000" drawWidth={1}
+                    stickerEmoji="" stickerSize={48}
+                    textColor="#000" textFont="Inter" textSize={24}
+                    textInput=""
+                    readOnly
+                  />
+                </div>
                 <div className="flex items-center justify-between bg-card px-2 py-1.5 text-xs">
                   <span className="font-medium">{name}</span>
                   {images[i] ? (
@@ -377,7 +432,20 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 ref={(el) => { pageRefs.current[i] = el; }}
                 style={{ width: orientation === "landscape" ? "1200px" : "900px" }}
               >
-                <CalendarPage {...previewProps(i)} />
+                <div className="relative">
+                  <CalendarPage {...previewProps(i)} />
+                  <CustomOverlay
+                    customization={customizations[i]}
+                    onChange={() => {}}
+                    tool="select"
+                    drawColor="#000" drawWidth={1}
+                    stickerEmoji="" stickerSize={48}
+                    textColor="#000" textFont="Inter" textSize={24}
+                    textInput=""
+                    readOnly
+                    refWidth={orientation === "landscape" ? 1200 : 900}
+                  />
+                </div>
               </div>
             ))}
           </div>
