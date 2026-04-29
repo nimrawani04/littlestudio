@@ -309,8 +309,19 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
         <section>
           {/* Active month preview */}
           <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_280px]">
-            <div className="mx-auto w-full max-w-md">
+            <div className="relative mx-auto w-full max-w-md">
               <CalendarPage {...previewProps(activeMonth)} />
+              {/* Read-only overlay so previews show stickers/drawings/frame */}
+              <CustomOverlay
+                customization={customizations[activeMonth]}
+                onChange={() => {}}
+                tool="select"
+                drawColor="#000" drawWidth={1}
+                stickerEmoji="" stickerSize={48}
+                textColor="#000" textFont="Inter" textSize={24}
+                textInput=""
+                readOnly
+              />
             </div>
             <div className="space-y-3">
               <div>
@@ -346,6 +357,27 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 <ArrowLeftRight className="mr-2 h-4 w-4" />
                 {swapSource === activeMonth ? "Cancel swap" : "Swap with…"}
               </Button>
+
+              <Dialog open={editorOpen} onOpenChange={setEditorOpen}>
+                <DialogTrigger asChild>
+                  <Button className="w-full" variant="secondary">
+                    <Sparkles className="mr-2 h-4 w-4" /> Customize this month
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-5xl">
+                  <DialogHeader>
+                    <DialogTitle>
+                      Customize {MONTH_NAMES[activeMonth]} — stickers, draw, text & frames
+                    </DialogTitle>
+                  </DialogHeader>
+                  <CustomEditor
+                    pageProps={previewProps(activeMonth)}
+                    customization={customizations[activeMonth]}
+                    onChange={(m) => setMonthCustomization(activeMonth, m)}
+                    onClear={() => setMonthCustomization(activeMonth, emptyMonthCustomization())}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
 
