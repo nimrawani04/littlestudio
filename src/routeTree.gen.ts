@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PolaroidRouteImport } from './routes/polaroid'
 import { Route as PhotoboothRouteImport } from './routes/photobooth'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PolaroidRoute = PolaroidRouteImport.update({
+  id: '/polaroid',
+  path: '/polaroid',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PhotoboothRoute = PhotoboothRouteImport.update({
   id: '/photobooth',
   path: '/photobooth',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/photobooth': typeof PhotoboothRoute
+  '/polaroid': typeof PolaroidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/photobooth': typeof PhotoboothRoute
+  '/polaroid': typeof PolaroidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/photobooth': typeof PhotoboothRoute
+  '/polaroid': typeof PolaroidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/photobooth'
+  fullPaths: '/' | '/photobooth' | '/polaroid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/photobooth'
-  id: '__root__' | '/' | '/photobooth'
+  to: '/' | '/photobooth' | '/polaroid'
+  id: '__root__' | '/' | '/photobooth' | '/polaroid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PhotoboothRoute: typeof PhotoboothRoute
+  PolaroidRoute: typeof PolaroidRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/polaroid': {
+      id: '/polaroid'
+      path: '/polaroid'
+      fullPath: '/polaroid'
+      preLoaderRoute: typeof PolaroidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/photobooth': {
       id: '/photobooth'
       path: '/photobooth'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PhotoboothRoute: PhotoboothRoute,
+  PolaroidRoute: PolaroidRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

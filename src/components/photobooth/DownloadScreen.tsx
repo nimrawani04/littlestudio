@@ -1,11 +1,12 @@
-export function DownloadScreen({ imageUrl, onRetake }: {
+export function DownloadScreen({ imageUrl, onRetake, isPolaroid }: {
   imageUrl: string;
   onRetake: () => void;
+  isPolaroid?: boolean;
 }) {
   const handleDownload = () => {
     const a = document.createElement("a");
     a.href = imageUrl;
-    a.download = `pixel-booth-strip-${Date.now()}.png`;
+    a.download = `pixel-${isPolaroid ? 'polaroid' : 'booth-strip'}-${Date.now()}.png`;
     a.click();
   };
 
@@ -53,12 +54,12 @@ export function DownloadScreen({ imageUrl, onRetake }: {
       <h2 className="pixel-font text-sm text-white mb-2 no-print" style={{ textShadow: "2px 2px 0 #8b1a56" }}>
         💾 Keep Your Memory
       </h2>
-      <p className="pixel-font text-[8px] text-pink-300 mb-6 opacity-70 no-print">your strip is ready!</p>
+      <p className="pixel-font text-[8px] text-pink-300 mb-6 opacity-70 no-print">your {isPolaroid ? 'polaroid' : 'strip'} is ready!</p>
 
       {/* Strip floating */}
       <div className="relative pixel-bounce">
         <div className="pixel-glow rounded-lg overflow-hidden" style={{ maxWidth: 220 }}>
-          <img src={imageUrl} alt="Photo strip" className="w-full rounded-lg"
+          <img src={imageUrl} alt={isPolaroid ? "Polaroid photo" : "Photo strip"} className="w-full rounded-lg"
             style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,105,180,0.2)" }} />
         </div>
         {/* Sparkles around */}
