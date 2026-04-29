@@ -51,3 +51,4 @@ export const COLOR_PRESETS = [
 
 export type ImagePosition = "top" | "bottom" | "background" | "framed";
 export type TextAlign = "left" | "center" | "right";
+export type Orientation = "portrait" | "landscape";
