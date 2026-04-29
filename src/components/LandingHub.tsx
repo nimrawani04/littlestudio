@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import "../../src/styles/photobooth.css";
+import logoUrl from "../assets/logo.png?url";
 
 /* ── tiny inline SVG pixel decorations ── */
 const Heart = ({ className = "" }: { className?: string }) => (
@@ -109,22 +110,24 @@ export function LandingHub() {
 
       {/* Title */}
       <div
-        className={`mb-12 text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}
+        className={`mb-6 text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}
       >
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <Heart className="text-pink-400 pixel-glow" />
-          <Heart className="text-pink-300 pixel-glow" style={{ animationDelay: "0.5s" }} />
-        </div>
+        <img 
+          src={logoUrl} 
+          alt="Pixel Studio Logo" 
+          className="w-40 md:w-48 mx-auto mb-2 pixel-pop pointer-events-none select-none" 
+          style={{ filter: "drop-shadow(0 0 15px rgba(219,39,119,0.4))", imageRendering: "pixelated" }} 
+        />
         <h1
-          className="pixel-font text-3xl md:text-5xl text-white mb-4"
-          style={{ textShadow: "4px 4px 0 #8b1a56, -2px -2px 0 #4a0e2e" }}
+          className="pixel-font text-xl md:text-3xl text-white mb-3"
+          style={{ textShadow: "3px 3px 0 #8b1a56" }}
         >
           Pixel Studio
         </h1>
-        <p className="pixel-font text-[10px] md:text-xs text-pink-200 tracking-wider opacity-80">
+        <p className="pixel-font text-[8px] md:text-[10px] text-pink-200 tracking-wider opacity-80">
           ✨ Choose your adventure ✨
         </p>
-        <PixelPig className="mx-auto mt-4" />
+        <PixelPig className="mx-auto mt-2 scale-75" />
       </div>
 
       {/* Two main cards */}
