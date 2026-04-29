@@ -399,7 +399,19 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                   swapSource === i && "ring-2 ring-accent-foreground",
                 )}
               >
-                <CalendarPage {...previewProps(i)} className="!shadow-none" />
+                <div className="relative">
+                  <CalendarPage {...previewProps(i)} className="!shadow-none" />
+                  <CustomOverlay
+                    customization={customizations[i]}
+                    onChange={() => {}}
+                    tool="select"
+                    drawColor="#000" drawWidth={1}
+                    stickerEmoji="" stickerSize={48}
+                    textColor="#000" textFont="Inter" textSize={24}
+                    textInput=""
+                    readOnly
+                  />
+                </div>
                 <div className="flex items-center justify-between bg-card px-2 py-1.5 text-xs">
                   <span className="font-medium">{name}</span>
                   {images[i] ? (
@@ -420,7 +432,20 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
                 ref={(el) => { pageRefs.current[i] = el; }}
                 style={{ width: orientation === "landscape" ? "1200px" : "900px" }}
               >
-                <CalendarPage {...previewProps(i)} />
+                <div className="relative">
+                  <CalendarPage {...previewProps(i)} />
+                  <CustomOverlay
+                    customization={customizations[i]}
+                    onChange={() => {}}
+                    tool="select"
+                    drawColor="#000" drawWidth={1}
+                    stickerEmoji="" stickerSize={48}
+                    textColor="#000" textFont="Inter" textSize={24}
+                    textInput=""
+                    readOnly
+                    refWidth={orientation === "landscape" ? 1200 : 900}
+                  />
+                </div>
               </div>
             ))}
           </div>
