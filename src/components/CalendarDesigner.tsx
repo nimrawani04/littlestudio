@@ -375,7 +375,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
               <div
                 key={i}
                 ref={(el) => { pageRefs.current[i] = el; }}
-                style={{ width: "900px" }}
+                style={{ width: orientation === "landscape" ? "1200px" : "900px" }}
               >
                 <CalendarPage {...previewProps(i)} />
               </div>
