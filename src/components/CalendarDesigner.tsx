@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { CalendarPage } from "@/components/CalendarPage";
+import { CustomEditor } from "@/components/CustomEditor";
+import { CustomOverlay } from "@/components/CustomOverlay";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   COLOR_PRESETS,
   FONT_OPTIONS,
@@ -14,8 +17,9 @@ import {
   type TextAlign,
   type WeekStart,
 } from "@/lib/calendar-utils";
+import { emptyMonthCustomization, type MonthCustomization } from "@/lib/custom-types";
 import { cn } from "@/lib/utils";
-import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Trash2, Upload } from "lucide-react";
+import { ArrowLeftRight, Download, Image as ImageIcon, Loader2, Sparkles, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -37,6 +41,13 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
   const [activeMonth, setActiveMonth] = useState(0);
   const [swapSource, setSwapSource] = useState<number | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [customizations, setCustomizations] = useState<MonthCustomization[]>(
+    () => Array.from({ length: 12 }, () => emptyMonthCustomization()),
+  );
+  const [editorOpen, setEditorOpen] = useState(false);
+
+  const setMonthCustomization = (i: number, m: MonthCustomization) =>
+    setCustomizations((prev) => prev.map((c, idx) => (idx === i ? m : c)));
 
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
