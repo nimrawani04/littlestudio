@@ -101,8 +101,8 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
       await onExport(els, orientation);
       toast.success("Calendar PDF downloaded");
     } catch (e) {
-      console.error(e);
-      toast.error("Export failed");
+      console.error("PDF Export Error:", e);
+      toast.error(`Export failed: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setExporting(false);
     }
@@ -497,7 +497,7 @@ export function CalendarDesigner({ onExport }: DesignerProps) {
           </div>
 
           {/* Hidden full-resolution pages used for PDF export */}
-          <div className="pointer-events-none fixed -left-[10000px] top-0" aria-hidden>
+          <div className="pointer-events-none absolute left-0 top-0 -z-50" aria-hidden>
             {MONTH_NAMES.map((_, i) => (
               <div
                 key={i}

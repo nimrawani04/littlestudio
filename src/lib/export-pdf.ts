@@ -1,4 +1,4 @@
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import { jsPDF } from "jspdf";
 import type { Orientation } from "./calendar-utils";
 
@@ -18,6 +18,8 @@ export async function exportCalendarPdf(
       backgroundColor: null,
       useCORS: true,
       logging: false,
+      windowWidth: pages[i].scrollWidth,
+      windowHeight: pages[i].scrollHeight,
     });
     const img = canvas.toDataURL("image/jpeg", 0.92);
 
