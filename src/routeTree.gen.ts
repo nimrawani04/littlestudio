@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PolaroidRouteImport } from './routes/polaroid'
 import { Route as PhotoboothRouteImport } from './routes/photobooth'
+import { Route as DigicamRouteImport } from './routes/digicam'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PolaroidRoute = PolaroidRouteImport.update({
@@ -23,6 +24,11 @@ const PhotoboothRoute = PhotoboothRouteImport.update({
   path: '/photobooth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DigicamRoute = DigicamRouteImport.update({
+  id: '/digicam',
+  path: '/digicam',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/photobooth' | '/polaroid'
+  fullPaths: '/' | '/digicam' | '/photobooth' | '/polaroid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/photobooth' | '/polaroid'
-  id: '__root__' | '/' | '/photobooth' | '/polaroid'
+  to: '/' | '/digicam' | '/photobooth' | '/polaroid'
+  id: '__root__' | '/' | '/digicam' | '/photobooth' | '/polaroid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DigicamRoute: typeof DigicamRoute
   PhotoboothRoute: typeof PhotoboothRoute
   PolaroidRoute: typeof PolaroidRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhotoboothRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/digicam': {
+      id: '/digicam'
+      path: '/digicam'
+      fullPath: '/digicam'
+      preLoaderRoute: typeof DigicamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DigicamRoute: DigicamRoute,
   PhotoboothRoute: PhotoboothRoute,
   PolaroidRoute: PolaroidRoute,
 }

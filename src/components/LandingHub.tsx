@@ -231,6 +231,51 @@ export function LandingHub() {
           </div>
         </Link>
 
+        {/* Digital Camera Card */}
+        <Link to="/digicam" className="block no-underline">
+          <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
+            <div
+              className="relative h-56 flex flex-col items-center justify-center p-6 block-texture"
+              style={{ background: "linear-gradient(180deg, #111827 0%, #374151 100%)" }}
+            >
+              {/* Digital Camera pixel art */}
+              <div className="relative mb-4 group-hover:scale-105 transition-transform duration-500">
+                <div
+                  className="w-32 h-24 rounded-lg flex flex-col relative shadow-xl"
+                  style={{
+                    border: "4px solid #4b5563",
+                    background: "#9ca3af",
+                  }}
+                >
+                  <div className="absolute top-2 right-2 w-12 h-6 bg-gray-800 rounded-sm flex items-center justify-center">
+                     <div className="w-8 h-4 bg-green-400 rounded-sm" />
+                  </div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gray-900 border-4 border-gray-600 flex items-center justify-center shadow-inner">
+                    <div className="w-8 h-8 rounded-full bg-cyan-900 border-2 border-gray-800 flex items-center justify-center">
+                       <div className="w-3 h-3 rounded-full bg-cyan-400/50 absolute top-2 right-2" />
+                    </div>
+                  </div>
+                  <div className="absolute top-2 left-2 w-6 h-4 bg-yellow-200 rounded-sm" />
+                </div>
+                <Star className="absolute -top-4 -right-3 text-cyan-300 twinkle" />
+                <Star className="absolute -bottom-4 -left-3 text-purple-300 twinkle" style={{ animationDelay: "1s" }} />
+              </div>
+            </div>
+            <div className="bg-gradient-to-b from-[#1f2937] to-[#111827] p-5 text-center">
+              <h2 className="pixel-font text-sm text-cyan-300 mb-2">Retro Y2K</h2>
+              <h3 className="pixel-font text-lg text-white mb-2" style={{ textShadow: "2px 2px 0 #000" }}>
+                DigiCam
+              </h3>
+              <p className="pixel-font text-[7px] text-gray-300 leading-relaxed opacity-70">
+                Early 2000s digital camera simulator with raw aesthetic
+              </p>
+              <div className="mt-4">
+                <span className="pixel-btn text-[8px] inline-block" style={{ background: "#374151", color: "#67e8f9", boxShadow: "inset -2px -2px 0px rgba(0,0,0,0.5)" }}>Power On →</span>
+              </div>
+            </div>
+          </div>
+        </Link>
+
         {/* Photo Booth Card */}
         <Link to="/photobooth" className="block no-underline">
           <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
