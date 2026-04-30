@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PolaroidRouteImport } from './routes/polaroid'
 import { Route as PhotoboothRouteImport } from './routes/photobooth'
 import { Route as DigicamRouteImport } from './routes/digicam'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PolaroidRoute = PolaroidRouteImport.update({
@@ -29,6 +30,11 @@ const DigicamRoute = DigicamRouteImport.update({
   path: '/digicam',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/digicam': typeof DigicamRoute
   '/photobooth': typeof PhotoboothRoute
   '/polaroid': typeof PolaroidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/digicam' | '/photobooth' | '/polaroid'
+  fullPaths: '/' | '/calendar' | '/digicam' | '/photobooth' | '/polaroid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/digicam' | '/photobooth' | '/polaroid'
-  id: '__root__' | '/' | '/digicam' | '/photobooth' | '/polaroid'
+  to: '/' | '/calendar' | '/digicam' | '/photobooth' | '/polaroid'
+  id: '__root__' | '/' | '/calendar' | '/digicam' | '/photobooth' | '/polaroid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
   DigicamRoute: typeof DigicamRoute
   PhotoboothRoute: typeof PhotoboothRoute
   PolaroidRoute: typeof PolaroidRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DigicamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
   DigicamRoute: DigicamRoute,
   PhotoboothRoute: PhotoboothRoute,
   PolaroidRoute: PolaroidRoute,

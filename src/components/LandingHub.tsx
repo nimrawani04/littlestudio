@@ -1,333 +1,368 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import "../../src/styles/photobooth.css";
-import logoUrl from "../assets/logo.png?url";
-
-/* ── tiny inline SVG pixel decorations ── */
-const Heart = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 16 16" className={className} width="16" height="16">
-    <rect x="3" y="1" width="4" height="2" fill="currentColor" />
-    <rect x="9" y="1" width="4" height="2" fill="currentColor" />
-    <rect x="1" y="3" width="14" height="2" fill="currentColor" />
-    <rect x="1" y="5" width="14" height="2" fill="currentColor" />
-    <rect x="2" y="7" width="12" height="2" fill="currentColor" />
-    <rect x="3" y="9" width="10" height="2" fill="currentColor" />
-    <rect x="4" y="11" width="8" height="2" fill="currentColor" />
-    <rect x="5" y="13" width="6" height="2" fill="currentColor" />
-    <rect x="6" y="15" width="4" height="1" fill="currentColor" />
-  </svg>
-);
-
-const Star = ({ className = "", style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg viewBox="0 0 12 12" className={className} style={style} width="12" height="12">
-    <rect x="5" y="0" width="2" height="2" fill="currentColor" />
-    <rect x="3" y="2" width="6" height="2" fill="currentColor" />
-    <rect x="0" y="4" width="12" height="2" fill="currentColor" />
-    <rect x="2" y="6" width="8" height="2" fill="currentColor" />
-    <rect x="1" y="8" width="4" height="2" fill="currentColor" />
-    <rect x="7" y="8" width="4" height="2" fill="currentColor" />
-    <rect x="0" y="10" width="3" height="2" fill="currentColor" />
-    <rect x="9" y="10" width="3" height="2" fill="currentColor" />
-  </svg>
-);
-
-/* ── Floating decoration component ── */
-function FloatingDeco() {
-  const items = Array.from({ length: 18 }, (_, i) => ({
-    id: i,
-    emoji: ["🌸", "💗", "✨", "🌷", "⭐", "💖", "🎀", "🌺", "💕"][i % 9],
-    left: `${5 + Math.random() * 90}%`,
-    top: `${5 + Math.random() * 90}%`,
-    delay: `${Math.random() * 4}s`,
-    size: 12 + Math.random() * 14,
-  }));
-
-  return (
-    <>
-      {items.map((it) => (
-        <span
-          key={it.id}
-          className="absolute pointer-events-none twinkle select-none"
-          style={{
-            left: it.left,
-            top: it.top,
-            animationDelay: it.delay,
-            fontSize: it.size,
-            opacity: 0.5,
-          }}
-        >
-          {it.emoji}
-        </span>
-      ))}
-    </>
-  );
-}
-
-/* ── Pixel pig ── */
-function PixelPig({ className = "" }: { className?: string }) {
-  return (
-    <div className={`relative ${className}`} style={{ width: 48, height: 40, imageRendering: "pixelated" }}>
-      <div className="absolute" style={{ left: 4, top: 0, width: 40, height: 28, background: "#f8a4b8", borderRadius: 4 }} />
-      <div className="absolute" style={{ left: 14, top: 8, width: 20, height: 12, background: "#e8829a", borderRadius: 2 }} />
-      <div className="absolute rounded-full" style={{ left: 17, top: 10, width: 4, height: 4, background: "#4a2030" }} />
-      <div className="absolute rounded-full" style={{ left: 27, top: 10, width: 4, height: 4, background: "#4a2030" }} />
-      <div className="absolute" style={{ left: 8, top: 28, width: 8, height: 12, background: "#f8a4b8", borderRadius: "0 0 2px 2px" }} />
-      <div className="absolute" style={{ left: 32, top: 28, width: 8, height: 12, background: "#f8a4b8", borderRadius: "0 0 2px 2px" }} />
-    </div>
-  );
-}
 
 export function LandingHub() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(t);
+    setLoaded(true);
   }, []);
 
   return (
     <div
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 30%, #16213e 60%, #0f3460 100%)",
+        background: "linear-gradient(135deg, #ffeef8 0%, #e8f4f8 50%, #f0e8ff 100%)",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      {/* Starry sky */}
-      <FloatingDeco />
+      {/* Animated background elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Floating shapes */}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={`shape-${i}`}
+            className="absolute rounded-full opacity-20"
+            style={{
+              width: `${100 + i * 50}px`,
+              height: `${100 + i * 50}px`,
+              background: i % 2 === 0 ? "#ff6b9d" : "#c44569",
+              left: `${10 + i * 15}%`,
+              top: `${-20 + i * 20}%`,
+              animation: `float-slow ${8 + i * 2}s ease-in-out infinite`,
+              animationDelay: `${i * 0.5}s`,
+            }}
+          />
+        ))}
 
-      {/* Ground blocks */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 block-texture" style={{ background: "#4a7c3f" }} />
-      <div className="absolute bottom-0 left-0 right-0 h-8 block-texture" style={{ background: "#6b4423" }} />
-
-      {/* Lanterns top */}
-      <div className="absolute top-6 left-0 right-0 flex justify-center gap-12 pointer-events-none">
-        {Array.from({ length: 7 }).map((_, i) => (
-          <span key={i} className="lantern-glow text-2xl" style={{ animationDelay: `${i * 0.4}s` }}>
-            🏮
-          </span>
+        {/* Floating dots */}
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div
+            key={`dot-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: "8px",
+              height: "8px",
+              background: i % 3 === 0 ? "#ff6b9d" : i % 3 === 1 ? "#ffa502" : "#6bcf7f",
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: 0.4,
+              animation: `float-dot ${5 + Math.random() * 5}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
+          />
         ))}
       </div>
 
-      {/* Title */}
-      <div
-        className={`mb-6 text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}
-      >
-        <img 
-          src={logoUrl} 
-          alt="Pixel Studio Logo" 
-          className="w-40 md:w-48 mx-auto mb-2 pixel-pop pointer-events-none select-none" 
-          style={{ filter: "drop-shadow(0 0 15px rgba(219,39,119,0.4))", imageRendering: "pixelated" }} 
-        />
-        <h1
-          className="pixel-font text-xl md:text-3xl text-white mb-3"
-          style={{ textShadow: "3px 3px 0 #8b1a56" }}
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center gap-8 px-4">
+        {/* Title */}
+        <div
+          className={`text-center transition-all duration-1000 ${
+            loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
-          Pixel Studio
-        </h1>
-        <p className="pixel-font text-[8px] md:text-[10px] text-pink-200 tracking-wider opacity-80">
-          ✨ Choose your adventure ✨
-        </p>
-        <PixelPig className="mx-auto mt-2 scale-75" />
-      </div>
+          <h1
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: 700,
+              background: "linear-gradient(135deg, #ff6b9d 0%, #ffa502 50%, #6bcf7f 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              marginBottom: "8px",
+              letterSpacing: "-1px",
+            }}
+          >
+            ✨ Creative Studio ✨
+          </h1>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#666",
+              fontWeight: 500,
+              letterSpacing: "0.5px",
+            }}
+          >
+            Capture • Create • Share
+          </p>
+        </div>
 
-      {/* Three main cards */}
-      <div
-        className={`relative z-10 flex flex-col md:flex-row flex-wrap justify-center gap-8 px-6 max-w-6xl transition-all duration-1000 delay-300 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-      >
-        {/* Calendar Card */}
-        <Link to="/" search={{ mode: "calendar" }} className="block no-underline">
-          <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
+        {/* One-line feature cards with icons */}
+        <div
+          className={`flex flex-wrap justify-center items-center gap-4 md:gap-6 transition-all duration-1000 ${
+            loaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          }`}
+          style={{
+            maxWidth: "1100px",
+          }}
+        >
+          {/* Calendar */}
+          <Link
+            to="/calendar"
+            className="group relative"
+            style={{
+              textDecoration: "none",
+            }}
+          >
             <div
-              className="relative h-56 flex flex-col items-center justify-center p-6 block-texture"
-              style={{ background: "linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%)" }}
+              className="flex flex-col items-center gap-2 cursor-pointer transition-all duration-300"
+              style={{
+                transform: "translateY(0)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
             >
-              {/* Calendar icon pixel art */}
-              <div className="relative mb-4 group-hover:scale-105 transition-transform duration-500">
-                <div
-                  className="w-24 h-28 rounded-lg flex flex-col overflow-hidden"
-                  style={{
-                    border: "4px solid #d63384",
-                    background: "linear-gradient(180deg, #ff69b4 0%, #fff0f5 30%)",
-                  }}
-                >
-                  <div className="bg-pink-500 h-8 flex items-center justify-center">
-                    <span className="pixel-font text-[6px] text-white">2026</span>
-                  </div>
-                  <div className="flex-1 grid grid-cols-7 gap-px p-1">
-                    {Array.from({ length: 28 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="aspect-square rounded-sm"
-                        style={{
-                          background: i === 14 ? "#ff69b4" : "rgba(219, 39, 119, 0.15)",
-                          fontSize: 3,
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <Star className="absolute -top-2 -right-3 text-yellow-300 twinkle" />
-                <Star className="absolute -bottom-1 -left-3 text-pink-300 twinkle" style={{ animationDelay: "1s" }} />
+              <div
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  background: "linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%)",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "28px",
+                  boxShadow: "0 8px 24px rgba(255, 107, 157, 0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                className="group-hover:shadow-lg"
+              >
+                📅
               </div>
-              <span className="text-2xl mb-1">📅</span>
-            </div>
-            <div className="bg-gradient-to-b from-[#2a0845] to-[#1a0a2e] p-5 text-center">
-              <h2 className="pixel-font text-sm text-pink-300 mb-2">Customize</h2>
-              <h3 className="pixel-font text-lg text-white mb-2" style={{ textShadow: "2px 2px 0 #8b1a56" }}>
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "#333",
+                  textAlign: "center",
+                  minWidth: "70px",
+                }}
+              >
                 Calendar
-              </h3>
-              <p className="pixel-font text-[7px] text-pink-200 leading-relaxed opacity-70">
-                Design a 12-month photo calendar & export as PDF
-              </p>
-              <div className="mt-4">
-                <span className="pixel-btn pixel-btn-pink text-[8px] inline-block">Enter →</span>
-              </div>
+              </span>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        {/* Polaroid Camera Card */}
-        <Link to="/polaroid" className="block no-underline">
-          <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
+          {/* Photo Booth */}
+          <Link
+            to="/photobooth"
+            className="group relative"
+            style={{
+              textDecoration: "none",
+            }}
+          >
             <div
-              className="relative h-56 flex flex-col items-center justify-center p-6 block-texture"
-              style={{ background: "linear-gradient(180deg, #ffb347 0%, #ff7b25 100%)" }}
+              className="flex flex-col items-center gap-2 cursor-pointer transition-all duration-300"
+              style={{
+                transform: "translateY(0)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
             >
-              {/* Polaroid Camera pixel art */}
-              <div className="relative mb-4 group-hover:scale-105 transition-transform duration-500">
-                <div
-                  className="w-32 h-28 rounded-xl flex flex-col items-center justify-center relative shadow-lg"
-                  style={{
-                    border: "4px solid #fff",
-                    background: "#e5e7eb",
-                  }}
-                >
-                  <div className="absolute top-2 right-3 w-4 h-4 rounded-full bg-red-500" />
-                  <div className="w-12 h-12 rounded-full bg-gray-800 border-4 border-gray-600 flex items-center justify-center shadow-inner">
-                    <div className="w-4 h-4 rounded-full bg-blue-400/50 absolute top-2 right-2" />
-                  </div>
-                  <div className="absolute bottom-[-10px] w-20 h-4 bg-gray-900 rounded-b-md" />
-                  {/* Polaroid sticking out */}
-                  <div className="absolute -bottom-6 w-16 h-12 bg-white border-2 border-gray-300 shadow-md transform rotate-3 flex items-start justify-center p-1">
-                    <div className="w-full h-8 bg-pink-200" />
-                  </div>
-                </div>
-                <Star className="absolute -top-4 -right-3 text-yellow-300 twinkle" />
-                <Star className="absolute -bottom-4 -left-3 text-pink-300 twinkle" style={{ animationDelay: "1s" }} />
+              <div
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  background: "linear-gradient(135deg, #ffa502 0%, #ffb84d 100%)",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "28px",
+                  boxShadow: "0 8px 24px rgba(255, 165, 2, 0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                className="group-hover:shadow-lg"
+              >
+                📸
               </div>
-            </div>
-            <div className="bg-gradient-to-b from-[#8b4513] to-[#4a2311] p-5 text-center">
-              <h2 className="pixel-font text-sm text-yellow-300 mb-2">Capture a</h2>
-              <h3 className="pixel-font text-lg text-white mb-2" style={{ textShadow: "2px 2px 0 #3e1f0e" }}>
-                Polaroid
-              </h3>
-              <p className="pixel-font text-[7px] text-yellow-100 leading-relaxed opacity-70">
-                Take a single shot & print a custom Instax-style photo
-              </p>
-              <div className="mt-4">
-                <span className="pixel-btn text-[8px] inline-block" style={{ background: "#d97706", boxShadow: "inset -2px -2px 0px rgba(0,0,0,0.2)" }}>Enter →</span>
-              </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* Digital Camera Card */}
-        <Link to="/digicam" className="block no-underline">
-          <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
-            <div
-              className="relative h-56 flex flex-col items-center justify-center p-6 block-texture"
-              style={{ background: "linear-gradient(180deg, #111827 0%, #374151 100%)" }}
-            >
-              {/* Digital Camera pixel art */}
-              <div className="relative mb-4 group-hover:scale-105 transition-transform duration-500">
-                <div
-                  className="w-32 h-24 rounded-lg flex flex-col relative shadow-xl"
-                  style={{
-                    border: "4px solid #4b5563",
-                    background: "#9ca3af",
-                  }}
-                >
-                  <div className="absolute top-2 right-2 w-12 h-6 bg-gray-800 rounded-sm flex items-center justify-center">
-                     <div className="w-8 h-4 bg-green-400 rounded-sm" />
-                  </div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gray-900 border-4 border-gray-600 flex items-center justify-center shadow-inner">
-                    <div className="w-8 h-8 rounded-full bg-cyan-900 border-2 border-gray-800 flex items-center justify-center">
-                       <div className="w-3 h-3 rounded-full bg-cyan-400/50 absolute top-2 right-2" />
-                    </div>
-                  </div>
-                  <div className="absolute top-2 left-2 w-6 h-4 bg-yellow-200 rounded-sm" />
-                </div>
-                <Star className="absolute -top-4 -right-3 text-cyan-300 twinkle" />
-                <Star className="absolute -bottom-4 -left-3 text-purple-300 twinkle" style={{ animationDelay: "1s" }} />
-              </div>
-            </div>
-            <div className="bg-gradient-to-b from-[#1f2937] to-[#111827] p-5 text-center">
-              <h2 className="pixel-font text-sm text-cyan-300 mb-2">Retro Y2K</h2>
-              <h3 className="pixel-font text-lg text-white mb-2" style={{ textShadow: "2px 2px 0 #000" }}>
-                DigiCam
-              </h3>
-              <p className="pixel-font text-[7px] text-gray-300 leading-relaxed opacity-70">
-                Early 2000s digital camera simulator with raw aesthetic
-              </p>
-              <div className="mt-4">
-                <span className="pixel-btn text-[8px] inline-block" style={{ background: "#374151", color: "#67e8f9", boxShadow: "inset -2px -2px 0px rgba(0,0,0,0.5)" }}>Power On →</span>
-              </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* Photo Booth Card */}
-        <Link to="/photobooth" className="block no-underline">
-          <div className="mc-card pixel-border-pink rounded-lg overflow-hidden w-72 md:w-80 cursor-pointer group transition-transform hover:-translate-y-2">
-            <div
-              className="relative h-56 flex flex-col items-center justify-center p-6 block-texture"
-              style={{ background: "linear-gradient(180deg, #4a1942 0%, #1a0a2e 100%)" }}
-            >
-              {/* Booth pixel art */}
-              <div className="relative mb-4">
-                <div
-                  className="w-28 h-28 rounded-lg flex items-center justify-center pixel-glow"
-                  style={{
-                    border: "4px solid #d63384",
-                    background: "linear-gradient(180deg, #8b1a56 0%, #4a0e2e 100%)",
-                  }}
-                >
-                  {/* Curtains */}
-                  <div className="absolute left-1 top-1 bottom-1 w-5" style={{ background: "repeating-linear-gradient(180deg, #d63384, #d63384 4px, #c4407e 4px, #c4407e 8px)" }} />
-                  <div className="absolute right-1 top-1 bottom-1 w-5" style={{ background: "repeating-linear-gradient(180deg, #d63384, #d63384 4px, #c4407e 4px, #c4407e 8px)" }} />
-                  <span className="text-4xl relative z-10">📸</span>
-                </div>
-                <div className="absolute -top-2 left-0 right-0 flex justify-center gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="lantern-glow text-xs" style={{ animationDelay: `${i * 0.3}s` }}>🏮</span>
-                  ))}
-                </div>
-                <Star className="absolute -bottom-2 -right-3 text-yellow-300 twinkle" style={{ animationDelay: "0.5s" }} />
-              </div>
-              <span className="text-2xl mb-1">🎀</span>
-            </div>
-            <div className="bg-gradient-to-b from-[#4a1942] to-[#1a0a2e] p-5 text-center">
-              <h2 className="pixel-font text-sm text-pink-300 mb-2">Enter the</h2>
-              <h3 className="pixel-font text-lg text-white mb-2" style={{ textShadow: "2px 2px 0 #8b1a56" }}>
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "#333",
+                  textAlign: "center",
+                  minWidth: "70px",
+                }}
+              >
                 Photo Booth
-              </h3>
-              <p className="pixel-font text-[7px] text-pink-200 leading-relaxed opacity-70">
-                Take pics, choose templates, add stickers & print strips
-              </p>
-              <div className="mt-4">
-                <span className="pixel-btn pixel-btn-purple text-[8px] inline-block">Enter →</span>
-              </div>
+              </span>
             </div>
-          </div>
-        </Link>
+          </Link>
+
+          {/* Polaroid */}
+          <Link
+            to="/polaroid"
+            className="group relative"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <div
+              className="flex flex-col items-center gap-2 cursor-pointer transition-all duration-300"
+              style={{
+                transform: "translateY(0)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              <div
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  background: "linear-gradient(135deg, #6bcf7f 0%, #7ddf64 100%)",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "28px",
+                  boxShadow: "0 8px 24px rgba(107, 207, 127, 0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                className="group-hover:shadow-lg"
+              >
+                🎞️
+              </div>
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "#333",
+                  textAlign: "center",
+                  minWidth: "70px",
+                }}
+              >
+                Polaroid
+              </span>
+            </div>
+          </Link>
+
+          {/* DigiCam */}
+          <Link
+            to="/digicam"
+            className="group relative"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <div
+              className="flex flex-col items-center gap-2 cursor-pointer transition-all duration-300"
+              style={{
+                transform: "translateY(0)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              <div
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  background: "linear-gradient(135deg, #00bcd4 0%, #4dd0e1 100%)",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "28px",
+                  boxShadow: "0 8px 24px rgba(0, 188, 212, 0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                className="group-hover:shadow-lg"
+              >
+                📷
+              </div>
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "#333",
+                  textAlign: "center",
+                  minWidth: "70px",
+                }}
+              >
+                DigiCam
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Decorative text */}
+        <div
+          style={{
+            marginTop: "24px",
+            textAlign: "center",
+            fontSize: "0.9rem",
+            color: "#999",
+            fontStyle: "italic",
+          }}
+        >
+          <p>Choose your creative adventure ✨</p>
+        </div>
       </div>
 
-      {/* Bottom vines */}
-      <div className="absolute bottom-16 left-0 right-0 flex justify-around pointer-events-none text-xl opacity-60">
-        {["🌸", "🌷", "🌺", "🌸", "🌷", "🌺", "🌸", "🌷"].map((f, i) => (
-          <span key={i} className="twinkle" style={{ animationDelay: `${i * 0.3}s` }}>{f}</span>
-        ))}
-      </div>
+      <style>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          25% { transform: translateY(-20px) translateX(10px); }
+          50% { transform: translateY(-40px) translateX(0px); }
+          75% { transform: translateY(-20px) translateX(-10px); }
+        }
+
+        @keyframes float-dot {
+          0%, 100% { transform: translateY(0px); opacity: 0.4; }
+          50% { transform: translateY(-30px); opacity: 0.8; }
+        }
+
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-in {
+          animation: fade-in-up 0.6s ease-out;
+        }
+
+        .fade-in {
+          animation: fade-in-up 0.6s ease-out;
+        }
+
+        .zoom-in {
+          animation: zoom-in 0.6s ease-out;
+        }
+
+        @keyframes zoom-in {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 }
