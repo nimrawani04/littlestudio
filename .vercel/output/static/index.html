@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="image" href="/assets/home-bg-0FHjXfO6.png"/><link rel="preload" as="image" href="/assets/tree-left-crop-xlXOudtK.png"/><link rel="preload" as="image" href="/assets/tree-right-crop-J-CiUp4I.png"/><title>Pixel Studio — Calendar Designer &amp; Photo Booth</title><meta name="author" content="Pixel Studio"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary"/><meta name="description" content="Create beautiful photo calendars or step into a Minecraft-style virtual photo booth. Design, capture, decorate, and download!"/><meta property="og:title" content="Pixel Studio"/><meta property="og:description" content="Calendar designer &amp; photo booth in a cute Minecraft pixel world."/><link rel="modulepreload" href="/assets/index-CnTAWdm-.js"/><link rel="modulepreload" href="/assets/index-DBith2Fj.js"/><link rel="modulepreload" href="/assets/export-pdf-K5hkJZi_.js"/><link rel="modulepreload" href="/assets/html2canvas-pro.esm-CP5GaE11.js"/><link rel="icon" href="/favicon.ico"/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="icon" href="/assets/favicon-CoGXu0sw.png" type="image/png"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="/assets/styles-teB-myZS.css"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&amp;family=Playfair+Display:wght@400;500;700&amp;family=Dancing+Script:wght@400;700&amp;family=Caveat:wght@400;700&amp;family=Press+Start+2P&amp;display=swap"/></head><body><!--$--><div class="w-screen h-screen bg-[#8fb6dd] flex items-center justify-center overflow-hidden font-sans select-none relative m-0 p-0"><style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@600;700;800&display=swap');
+
+        /* Tree Sway Keyframes */
+        @keyframes sway-tree-left {
+          0%, 100% {
+            transform: rotate(0deg) skewX(0deg);
+          }
+          25% {
+            transform: rotate(-1.4deg) skewX(-0.8deg);
+          }
+          75% {
+            transform: rotate(1.1deg) skewX(0.6deg);
+          }
+        }
+
+        @keyframes sway-tree-right {
+          0%, 100% {
+            transform: rotate(0deg) skewX(0deg);
+          }
+          30% {
+            transform: rotate(1.3deg) skewX(0.7deg);
+          }
+          80% {
+            transform: rotate(-1.0deg) skewX(-0.5deg);
+          }
+        }
+
+        /* Lantern pulse */
+        @keyframes lantern-glow {
+          0%, 100% {
+            opacity: 0.6;
+            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+          }
+          50% {
+            opacity: 0.9;
+            filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.9));
+          }
+        }
+
+        /* Twinkle stars */
+        @keyframes star-twinkle {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.85);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.15);
+          }
+        }
+
+        /* Floating petal / sparkle */
+        @keyframes drift-petal {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.9;
+          }
+          90% {
+            opacity: 0.9;
+          }
+          100% {
+            transform: translate(120px, 140px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        /* Card hover lift */
+        .card-hotspot:hover {
+          transform: translateY(-4px) scale(1.02);
+        }
+
+        .card-hotspot:active {
+          transform: translateY(1px) scale(0.98);
+        }
+
+        /* Door knock bounce */
+        @keyframes door-knock {
+          0%, 100% { transform: scale(1); }
+          20% { transform: scale(1.04) rotate(-1deg); }
+          40% { transform: scale(0.98) rotate(1deg); }
+          60% { transform: scale(1.03) rotate(-0.5deg); }
+          80% { transform: scale(0.99); }
+        }
+
+        .door-animated {
+          animation: door-knock 0.8s ease-in-out;
+        }
+      </style><div class="relative shadow-2xl transition-opacity duration-700 opacity-0" style="width:min(100vw, calc(100vh * (1024 / 471)));height:min(100vh, calc(100vw * (471 / 1024)));aspect-ratio:1024 / 471"><img src="/assets/home-bg-0FHjXfO6.png" alt="Little Studio" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" style="image-rendering:pixelated"/><div class="absolute pointer-events-none" style="left:0.00%;top:14.86%;width:23.93%;height:50.96%;transform-origin:55% 95%;animation:sway-tree-left 4.6s ease-in-out infinite"><img src="/assets/tree-left-crop-xlXOudtK.png" alt="Left Tree Canopy" class="w-full h-full object-contain select-none" style="image-rendering:pixelated"/></div><div class="absolute pointer-events-none" style="left:70.31%;top:14.86%;width:29.69%;height:50.96%;transform-origin:45% 95%;animation:sway-tree-right 5.2s ease-in-out infinite"><img src="/assets/tree-right-crop-J-CiUp4I.png" alt="Right Tree Canopy" class="w-full h-full object-contain select-none" style="image-rendering:pixelated"/></div><div class="absolute pointer-events-none text-white select-none" style="left:12.5%;top:11%;animation:star-twinkle 3.2s ease-in-out infinite">✦</div><div class="absolute pointer-events-none text-white select-none" style="left:22.8%;top:16%;animation:star-twinkle 2.8s ease-in-out infinite 0.9s">✧</div><div class="absolute pointer-events-none text-white select-none" style="left:34.5%;top:9.5%;animation:star-twinkle 3.5s ease-in-out infinite 1.4s">✦</div><div class="absolute pointer-events-none text-white select-none" style="left:60.2%;top:8.5%;animation:star-twinkle 3.0s ease-in-out infinite 0.5s">✧</div><div class="absolute pointer-events-none text-white select-none" style="left:68.6%;top:14.5%;animation:star-twinkle 3.3s ease-in-out infinite 1.8s">✦</div><div class="absolute pointer-events-none text-white select-none" style="left:87.0%;top:10.0%;animation:star-twinkle 2.7s ease-in-out infinite 0.3s">✧</div><div class="absolute pointer-events-none select-none text-[8px] text-[#ffccd5]" style="left:8%;top:30%;animation:drift-petal 6s linear infinite 0.5s">🌸</div><div class="absolute pointer-events-none select-none text-[8px] text-[#ffffff]" style="left:15%;top:22%;animation:drift-petal 7.5s linear infinite 2.5s">🤍</div><div class="absolute pointer-events-none select-none text-[8px] text-[#ffccd5]" style="left:78%;top:25%;animation:drift-petal 6.8s linear infinite 1.2s">🌸</div><div class="absolute rounded-full pointer-events-none bg-[#ffeb99]/40" style="left:6.8%;top:60.0%;width:3.6%;height:7.8%;animation:lantern-glow 2.5s ease-in-out infinite"></div><div class="absolute rounded-full pointer-events-none bg-[#ffeb99]/40" style="left:86.8%;top:60.0%;width:3.6%;height:7.8%;animation:lantern-glow 2.5s ease-in-out infinite 1.2s"></div><a href="/calendar" style="left:23.0%;top:53.2%;width:8.2%;height:24.2%" class="card-hotspot absolute z-20 transition-all duration-200 cursor-pointer group no-underline rounded-lg"><div class="w-full h-full rounded-lg border-2 border-transparent group-hover:border-[#ffdb70] group-hover:bg-[#ffdb70]/15 group-hover:shadow-[0_0_12px_rgba(255,219,112,0.8)] transition-all flex flex-col items-center justify-between p-1"></div></a><a href="/polaroid" style="left:34.3%;top:53.2%;width:8.4%;height:24.2%" class="card-hotspot absolute z-20 transition-all duration-200 cursor-pointer group no-underline rounded-lg"><div class="w-full h-full rounded-lg border-2 border-transparent group-hover:border-[#ff9470] group-hover:bg-[#ff9470]/15 group-hover:shadow-[0_0_12px_rgba(255,148,112,0.8)] transition-all"></div></a><div class="absolute z-20 cursor-pointer group rounded-lg card-hotspot" style="left:44.8%;top:52.8%;width:10.4%;height:33.5%"><div class="w-full h-full rounded-lg border-2 border-transparent group-hover:border-[#70c7ff] group-hover:bg-[#70c7ff]/15 group-hover:shadow-[0_0_14px_rgba(112,199,255,0.8)] transition-all"></div></div><a href="/photobooth" style="left:56.9%;top:53.2%;width:8.0%;height:24.2%" class="card-hotspot absolute z-20 transition-all duration-200 cursor-pointer group no-underline rounded-lg"><div class="w-full h-full rounded-lg border-2 border-transparent group-hover:border-[#ff94c2] group-hover:bg-[#ff94c2]/15 group-hover:shadow-[0_0_12px_rgba(255,148,194,0.8)] transition-all"></div></a><a href="/digicam" style="left:67.8%;top:53.2%;width:8.0%;height:24.2%" class="card-hotspot absolute z-20 transition-all duration-200 cursor-pointer group no-underline rounded-lg"><div class="w-full h-full rounded-lg border-2 border-transparent group-hover:border-[#c494ff] group-hover:bg-[#c494ff]/15 group-hover:shadow-[0_0_12px_rgba(196,148,255,0.8)] transition-all"></div></a><div class="absolute z-20 cursor-default rounded-lg" style="left:11.3%;top:72.4%;width:11.0%;height:24.0%"></div><div class="absolute top-2 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1b3a57]/40 backdrop-blur-[2px] border border-white/20 text-white text-[9px] sm:text-[11px] font-semibold tracking-wider"><span>♥</span><span style="font-family:&#x27;Quicksand&#x27;, sans-serif">LITTLE STUDIO</span><span>♥</span></div></div></div><script>(function(t){let s;try{s=JSON.parse(sessionStorage.getItem(t.storageKey)||"{}")}catch(e){console.error(e);return}const c=t.key||window.history.state?.__TSR_key,r=c?s[c]:void 0;if(t.shouldScrollRestoration&&r&&typeof r=="object"&&Object.keys(r).length>0){for(const e in r){const o=r[e];if(!o||typeof o!="object")continue;const l=o.scrollX,i=o.scrollY;if(!(!Number.isFinite(l)||!Number.isFinite(i))){if(e==="window")window.scrollTo({top:i,left:l,behavior:t.behavior});else if(e){let n;try{n=document.querySelector(e)}catch{continue}n&&(n.scrollLeft=l,n.scrollTop=i)}}}return}const a=window.location.hash.split("#",2)[1];if(a){const e=window.history.state?.__hashScrollIntoViewOptions??!0;if(e){const o=document.getElementById(a);o&&o.scrollIntoView(e)}return}window.scrollTo({top:0,left:0,behavior:t.behavior})})({"storageKey":"tsr-scroll-restoration-v1_3","shouldScrollRestoration":true});document.currentScript.remove()</script><!--/$--><script class="$tsr" id="$tsr-stream-barrier">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-CnTAWdm-.js"],assets:$R[5]=[$R[6]={tag:"script",attrs:$R[7]={type:"module",async:!0},children:"import(\"/assets/index-CnTAWdm-.js\")"}]},"/":$R[8]={preloads:$R[9]=["/assets/index-DBith2Fj.js","/assets/export-pdf-K5hkJZi_.js","/assets/html2canvas-pro.esm-CP5GaE11.js"]}}},matches:$R[10]=[$R[11]={i:"__root__ ",u:1793027785728,s:"success",ssr:!0},$R[12]={i:"  ",u:1793027786355,s:"success",ssr:!0}],lastMatchId:"  "})($R["tsr"]);$_TSR.e();document.currentScript.remove()</script><script type="module" async="">import("/assets/index-CnTAWdm-.js")</script></body></html>

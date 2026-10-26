@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="image" href="/assets/photobooth-bg-B2xYLfX1.png"/><link rel="preload" as="image" href="/assets/curtain-left-B8mg0nBh.png"/><link rel="preload" as="image" href="/assets/curtain-right-Ct_xacn2.png"/><link rel="preload" as="image" href="/assets/enter-sign-transparent-YRMv8aBx.png"/><title>Pixel Photo Booth — Minecraft-Style Virtual Photo Booth</title><meta name="author" content="Pixel Studio"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary"/><meta name="description" content="Step into a cozy Minecraft-style photo booth. Take photos, choose templates, add stickers, and print pixel-perfect photo strips."/><meta property="og:title" content="Pixel Photo Booth"/><meta property="og:description" content="A Minecraft-style virtual photobooth world. Take pics, decorate strips, and download memories."/><link rel="modulepreload" href="/assets/index-CnTAWdm-.js"/><link rel="modulepreload" href="/assets/photobooth-CCenCE77.js"/><link rel="modulepreload" href="/assets/DownloadScreen-B6sXr3SF.js"/><link rel="icon" href="/favicon.ico"/><link rel="icon" href="/favicon.png" type="image/png"/><link rel="icon" href="/assets/favicon-CoGXu0sw.png" type="image/png"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="/assets/styles-teB-myZS.css"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&amp;family=Playfair+Display:wght@400;500;700&amp;family=Dancing+Script:wght@400;700&amp;family=Caveat:wght@400;700&amp;family=Press+Start+2P&amp;display=swap"/><link rel="stylesheet" href="/assets/photobooth-HgWd0WAo.css#" type="text/css"/></head><body><!--$--><div class="w-screen h-screen bg-[#f5ede5] flex items-center justify-center overflow-hidden font-sans select-none relative m-0 p-0"><style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@600;700;800&display=swap');
+
+        /* Gentle curtain idle swaying / rippling */
+        @keyframes curtain-sway-left {
+          0%, 100% {
+            transform: skewX(0deg) scaleX(1);
+          }
+          30% {
+            transform: skewX(-2deg) scaleX(0.97);
+          }
+          70% {
+            transform: skewX(1.5deg) scaleX(1.02);
+          }
+        }
+
+        @keyframes curtain-sway-right {
+          0%, 100% {
+            transform: skewX(0deg) scaleX(1);
+          }
+          35% {
+            transform: skewX(2deg) scaleX(0.97);
+          }
+          75% {
+            transform: skewX(-1.5deg) scaleX(1.02);
+          }
+        }
+
+        /* Curtain parting when entering */
+        @keyframes curtain-open-left {
+          0% {
+            transform: translateX(0%) scaleX(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(-90%) scaleX(0.2);
+            opacity: 0.7;
+          }
+        }
+
+        @keyframes curtain-open-right {
+          0% {
+            transform: translateX(0%) scaleX(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(90%) scaleX(0.2);
+            opacity: 0.7;
+          }
+        }
+
+        /* Hanging sign gentle swing */
+        @keyframes sign-swing {
+          0%, 100% {
+            transform: rotate(0deg) translateY(0);
+          }
+          30% {
+            transform: rotate(-1.5deg) translateY(-1px);
+          }
+          75% {
+            transform: rotate(1.5deg) translateY(1px);
+          }
+        }
+
+        /* Warm interior glow when curtain opens */
+        @keyframes booth-glow-reveal {
+          0% {
+            opacity: 0;
+            transform: scale(0.85);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1.15);
+          }
+        }
+
+        /* Hanging lamps soft breathing pulse */
+        @keyframes lamp-pulse {
+          0%, 100% {
+            opacity: 0.55;
+            filter: drop-shadow(0 0 8px rgba(255, 230, 150, 0.6));
+          }
+          50% {
+            opacity: 0.85;
+            filter: drop-shadow(0 0 16px rgba(255, 230, 150, 0.9));
+          }
+        }
+
+        /* Twinkle stars */
+        @keyframes photobooth-star {
+          0%, 100% { opacity: 0.3; transform: scale(0.9); }
+          50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .pixel-text {
+          font-family: 'Press Start 2P', monospace;
+          image-rendering: pixelated;
+        }
+      </style><div class="relative shadow-2xl transition-opacity duration-700 opacity-0" style="width:min(100vw, calc(100vh * (1024 / 477)));height:min(100vh, calc(100vw * (477 / 1024)));aspect-ratio:1024 / 477"><img src="/assets/photobooth-bg-B2xYLfX1.png" alt="Photobooth Kiosk" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" style="image-rendering:pixelated"/><a href="/" class="absolute top-3 left-3 z-50 flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#fff0f3] border-2 border-[#5c3a1e] text-[#5c3a1e] text-[9px] font-bold shadow-[0_2px_0_#5c3a1e] hover:-translate-y-0.5 hover:shadow-[0_4px_0_#5c3a1e] active:translate-y-0 active:shadow-none transition-all no-underline pixel-text"><span>←</span> STUDIO</a><div class="absolute pointer-events-none select-none text-[#ffe8a3] text-[10px]" style="left:19.5%;top:18.5%;animation:photobooth-star 3.2s ease-in-out infinite">✦</div><div class="absolute pointer-events-none select-none text-[#ffe8a3] text-[9px]" style="left:93.0%;top:10.0%;animation:photobooth-star 2.8s ease-in-out infinite 0.7s">✧</div><div class="absolute pointer-events-none select-none text-[#ffe8a3] text-[10px]" style="left:82.5%;top:22.5%;animation:photobooth-star 3.4s ease-in-out infinite 1.4s">✦</div><div class="absolute pointer-events-none bg-[#ffe8a3]/35 rounded-full" style="left:36.5%;top:9.5%;width:5.5%;height:8.0%;animation:lamp-pulse 2.6s ease-in-out infinite"></div><div class="absolute pointer-events-none bg-[#ffe8a3]/35 rounded-full" style="left:47.8%;top:9.5%;width:5.5%;height:8.0%;animation:lamp-pulse 2.6s ease-in-out infinite 0.9s"></div><div class="absolute pointer-events-none bg-[#ffe8a3]/35 rounded-full" style="left:58.5%;top:9.5%;width:5.5%;height:8.0%;animation:lamp-pulse 2.6s ease-in-out infinite 1.8s"></div><div class="absolute z-20 cursor-pointer" style="left:63.5%;top:6.5%;width:7.8%;height:9.0%" title="Pet the cat!"></div><div class="absolute z-20 cursor-pointer rounded-full" style="left:67.8%;top:41.5%;width:7.2%;height:26.5%" title="Look in the mirror!"></div><div class="absolute z-20 cursor-pointer group" style="left:45.70%;top:28.30%;width:18.55%;height:57.23%"><div class="absolute top-0 bottom-0 left-0 w-1/2 overflow-hidden pointer-events-none" style="transform-origin:top left;animation:curtain-sway-left 3.8s ease-in-out infinite"><img src="/assets/curtain-left-B8mg0nBh.png" alt="Curtain Left" class="w-full h-full object-fill select-none" style="image-rendering:pixelated"/></div><div class="absolute top-0 bottom-0 right-0 w-1/2 overflow-hidden pointer-events-none" style="transform-origin:top right;animation:curtain-sway-right 4.2s ease-in-out infinite"><img src="/assets/curtain-right-Ct_xacn2.png" alt="Curtain Right" class="w-full h-full object-fill select-none" style="image-rendering:pixelated"/></div><div class="absolute z-30 transition-all duration-300 opacity-100 group-hover:scale-105" style="left:11.5%;top:38.5%;width:77%;height:22%;transform-origin:top center;animation:sign-swing 2.8s ease-in-out infinite"><img src="/assets/enter-sign-transparent-YRMv8aBx.png" alt="Enter Photobooth" class="w-full h-full object-contain select-none filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]" style="image-rendering:pixelated"/></div></div><div class="absolute z-10 cursor-pointer rounded group" style="left:25.5%;top:35.2%;width:17.0%;height:29.5%" title="Click to start photoshoot!"><div class="w-full h-full border border-transparent group-hover:border-[#ff94c2]/50 group-hover:bg-[#ff94c2]/10 transition-all rounded"></div></div><div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 cursor-pointer flex items-center gap-2 px-3 py-1 rounded-full bg-[#3d2729]/80 backdrop-blur-[2px] border border-[#f8a4c8]/40 text-white text-[9px] md:text-[10px] shadow-lg hover:scale-105 active:scale-95 transition-all"><span class="text-[#f8a4c8] animate-pulse">♥</span><span class="pixel-text">CLICK CURTAIN TO ENTER</span><span class="text-[#f8a4c8] animate-pulse">♥</span></div></div></div><script>(function(t){let s;try{s=JSON.parse(sessionStorage.getItem(t.storageKey)||"{}")}catch(e){console.error(e);return}const c=t.key||window.history.state?.__TSR_key,r=c?s[c]:void 0;if(t.shouldScrollRestoration&&r&&typeof r=="object"&&Object.keys(r).length>0){for(const e in r){const o=r[e];if(!o||typeof o!="object")continue;const l=o.scrollX,i=o.scrollY;if(!(!Number.isFinite(l)||!Number.isFinite(i))){if(e==="window")window.scrollTo({top:i,left:l,behavior:t.behavior});else if(e){let n;try{n=document.querySelector(e)}catch{continue}n&&(n.scrollLeft=l,n.scrollTop=i)}}}return}const a=window.location.hash.split("#",2)[1];if(a){const e=window.history.state?.__hashScrollIntoViewOptions??!0;if(e){const o=document.getElementById(a);o&&o.scrollIntoView(e)}return}window.scrollTo({top:0,left:0,behavior:t.behavior})})({"storageKey":"tsr-scroll-restoration-v1_3","shouldScrollRestoration":true});document.currentScript.remove()</script><!--/$--><script class="$tsr" id="$tsr-stream-barrier">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-CnTAWdm-.js"],assets:$R[5]=[$R[6]={tag:"script",attrs:$R[7]={type:"module",async:!0},children:"import(\"/assets/index-CnTAWdm-.js\")"}]},"/photobooth":$R[8]={preloads:$R[9]=["/assets/photobooth-CCenCE77.js","/assets/DownloadScreen-B6sXr3SF.js"],assets:$R[10]=[$R[11]={tag:"link",attrs:$R[12]={rel:"stylesheet",href:"/assets/photobooth-HgWd0WAo.css#",type:"text/css"}}]}}},matches:$R[13]=[$R[14]={i:"__root__ ",u:1793027785771,s:"success",ssr:!0},$R[15]={i:" photobooth photobooth",u:1793027786137,s:"success",ssr:!0}],lastMatchId:" photobooth photobooth"})($R["tsr"]);$_TSR.e();document.currentScript.remove()</script><script type="module" async="">import("/assets/index-CnTAWdm-.js")</script></body></html>

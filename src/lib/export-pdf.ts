@@ -4,7 +4,7 @@ import type { Orientation } from "./calendar-utils";
 
 export async function exportCalendarPdf(
   pages: HTMLElement[],
-  orientation: Orientation = "portrait",
+  orientation: Orientation = "landscape",
   filename = "calendar.pdf",
 ) {
   if (!pages.length) return;

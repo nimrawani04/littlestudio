@@ -1,0 +1,1 @@
+import{j as a}from"./index-BeH6KwPG.js";import{C as n,e as o}from"./export-pdf-_j-XTEX7.js";import"./html2canvas-pro.esm-CP5GaE11.js";function m(){return a.jsx(n,{onExport:(r,e)=>o(r,e,"my-calendar.pdf")})}export{m as component};

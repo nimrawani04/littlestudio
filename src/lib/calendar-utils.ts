@@ -22,6 +22,7 @@ export function getMonthGrid(year: number, monthIndex: number, weekStart: WeekSt
 }
 
 export const TEMPLATES = [
+  { id: "custom-studio", name: "Custom Mix & Match ✨", desc: "Choose your own frame, font & style" },
   { id: "minimal", name: "Minimal", desc: "Clean & airy" },
   { id: "elegant", name: "Elegant Serif", desc: "Refined & timeless" },
   { id: "handwritten", name: "Handwritten", desc: "Warm & personal" },
@@ -31,21 +32,50 @@ export const TEMPLATES = [
   { id: "poster-arched", name: "Poster Arched", desc: "Arched frame with large number" },
   { id: "vintage-poster", name: "Vintage Poster", desc: "Rectangular bordered image" },
   { id: "quote-landscape", name: "Quote Style", desc: "Image with quote & overlay" },
+  { id: "scrapbook", name: "Scrapbook", desc: "Tape effects & polaroid" },
+  { id: "polaroid-card", name: "Polaroid Snapshot", desc: "Classic instant photo frame" },
+  { id: "circle-portal", name: "Circle Portal", desc: "Soft rounded circular cutout" },
+  { id: "film-strip", name: "Film Strip (35mm)", desc: "Perforated analog film negative" },
   { id: "artistic-ox", name: "Artistic Ox", desc: "Boxed month header" },
   { id: "artistic-tiger", name: "Artistic Tiger", desc: "Clean illustration focus" },
   { id: "retro-bold", name: "Retro Bold", desc: "Large typography, vibrant" },
   { id: "minimal-split", name: "Minimal Split", desc: "50/50 clean split" },
-  { id: "scrapbook", name: "Scrapbook", desc: "Tape effects & polaroid" },
 ] as const;
 
 export type TemplateId = typeof TEMPLATES[number]["id"];
+
+export const PHOTO_FRAME_STYLES = [
+  { id: "box", name: "Classic Box", desc: "Clean modern rectangle", icon: "⏹️" },
+  { id: "poster-arched", name: "Poster Arched", desc: "Arched window cutout", icon: "🏛️" },
+  { id: "scrapbook", name: "Scrapbook Washi", desc: "Tilted photo with tape & stamp", icon: "📎" },
+  { id: "quote", name: "Quote Style", desc: "Editorial quote with photo backdrop", icon: "💬" },
+  { id: "vintage-poster", name: "Vintage Poster", desc: "Retro double border & stamp", icon: "📜" },
+  { id: "polaroid", name: "Polaroid Film", desc: "Instant camera frame with chin", icon: "📷" },
+  { id: "circle", name: "Circle Portal", desc: "Circular round cutout", icon: "⚪" },
+  { id: "filmstrip", name: "Film Strip (35mm)", desc: "Perforated analog negative", icon: "🎞️" },
+] as const;
+
+export type PhotoFrameStyle = typeof PHOTO_FRAME_STYLES[number]["id"];
+
+export const BG_PATTERNS = [
+  { id: "none", name: "Solid Color", icon: "⬜" },
+  { id: "sunset", name: "Playful Sunset", icon: "🌅" },
+  { id: "grid", name: "Grid Paper", icon: "📐" },
+  { id: "dots", name: "Journal Dots", icon: "⁘" },
+  { id: "stars", name: "Constellations", icon: "✨" },
+  { id: "parchment", name: "Vintage Parchment", icon: "📜" },
+  { id: "watercolor", name: "Soft Watercolor", icon: "🎨" },
+  { id: "custom", name: "Uploaded Wallpaper", icon: "🖼️" },
+] as const;
 
 export const FONT_OPTIONS = [
   { id: "default", name: "Template default", css: "" },
   { id: "sans", name: "Clean Sans", css: "Inter, sans-serif" },
   { id: "serif", name: "Elegant Serif", css: "'Playfair Display', serif" },
   { id: "script", name: "Cursive Script", css: "'Dancing Script', cursive" },
-  { id: "hand", name: "Handwritten", css: "Caveat, cursive" },
+  { id: "hand", name: "Vintage Handwritten", css: "Caveat, cursive" },
+  { id: "pixel", name: "Retro Pixel", css: "'Press Start 2P', monospace" },
+  { id: "mono", name: "Typewriter Mono", css: "ui-monospace, Menlo, monospace" },
 ] as const;
 
 export const COLOR_PRESETS = [

@@ -280,13 +280,79 @@
   --cal-title-size: 3.5rem;
 }
 
+.tpl-custom-studio {
+  --cal-bg: #fffbf5;
+  --cal-surface: #ffffff;
+  --cal-text: #292524;
+  --cal-muted: #78716c;
+  --cal-accent: #e11d48;
+  --cal-border: #e7e5e4;
+  --cal-font-title: "Caveat", cursive;
+  --cal-font-body: "Inter", sans-serif;
+  --cal-title-weight: 700;
+  --cal-title-tracking: 0;
+  --cal-title-transform: none;
+  --cal-title-size: 3rem;
+}
+
+.tpl-polaroid-card {
+  --cal-bg: #f8fafc;
+  --cal-surface: #ffffff;
+  --cal-text: #1e293b;
+  --cal-muted: #64748b;
+  --cal-accent: #0284c7;
+  --cal-border: #e2e8f0;
+  --cal-font-title: "Caveat", cursive;
+  --cal-font-body: "Inter", sans-serif;
+  --cal-title-weight: 700;
+  --cal-title-tracking: 0;
+  --cal-title-transform: none;
+  --cal-title-size: 3rem;
+}
+
+.tpl-circle-portal {
+  --cal-bg: #fdf4ff;
+  --cal-surface: #ffffff;
+  --cal-text: #3b0764;
+  --cal-muted: #7e22ce;
+  --cal-accent: #a855f7;
+  --cal-border: #f0abfc;
+  --cal-font-title: "'Playfair Display', serif";
+  --cal-font-body: "Inter", sans-serif;
+  --cal-title-weight: 700;
+  --cal-title-tracking: 0.05em;
+  --cal-title-transform: uppercase;
+  --cal-title-size: 2.5rem;
+}
+
+.tpl-film-strip {
+  --cal-bg: #1c1917;
+  --cal-surface: #292524;
+  --cal-text: #fafaf9;
+  --cal-muted: #a8a29e;
+  --cal-accent: #f59e0b;
+  --cal-border: #44403c;
+  --cal-font-title: "ui-monospace, monospace";
+  --cal-font-body: "Inter", sans-serif;
+  --cal-title-weight: 700;
+  --cal-title-tracking: 0.1em;
+  --cal-title-transform: uppercase;
+  --cal-title-size: 2.2rem;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    overflow-x: hidden;
   }
 }

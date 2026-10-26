@@ -48,21 +48,40 @@ export interface MonthCustomization {
   items: CustomItem[];
   frame: FrameStyle;
   frameColor: string;
+  // Month Name (Title)
+  titleShow?: boolean;
   titleFont?: string;
   titleSize?: number;
   titleColor?: string;
   titleX?: number;
   titleY?: number;
+  // Month Number (01, 1, I, etc.)
+  monthNumberShow?: boolean;
+  monthNumberFormat?: "padded" | "simple" | "roman" | "hidden";
+  monthNumberFont?: string;
+  monthNumberSize?: number;
+  monthNumberColor?: string;
+  monthNumberX?: number;
+  monthNumberY?: number;
+  // Weekday Headers
+  weekdaysShow?: boolean;
   weekdaysFont?: string;
   weekdaysSize?: number;
   weekdaysColor?: string;
   weekdaysX?: number;
   weekdaysY?: number;
+  // Dates Grid
+  datesShow?: boolean;
   datesFont?: string;
   datesSize?: number;
   datesColor?: string;
   datesX?: number;
   datesY?: number;
+  datesGridStyle?: "clean" | "boxed" | "circle" | "lines";
+  // Photo placement
+  photoX?: number;
+  photoY?: number;
+  photoScale?: number;
 }
 
 export const emptyMonthCustomization = (): MonthCustomization => ({

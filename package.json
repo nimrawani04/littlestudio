@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
-    "build:vercel": "NITRO_PRESET=vercel vite build",
+    "build": "vite build && node postbuild.js",
+    "build:vercel": "vite build && node postbuild.js",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."

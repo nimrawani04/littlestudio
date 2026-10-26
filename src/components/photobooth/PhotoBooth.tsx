@@ -55,11 +55,16 @@ export function PhotoBooth() {
 
     case "count":
       return (
-        <PhotoCountSelect onSelect={(n) => {
-          setShotCount(n);
-          setPhotos([]);
-          setStep("filter");
-        }} />
+        <PhotoCountSelect
+          mode={mode}
+          onModeChange={setMode}
+          onBack={() => setStep("control")}
+          onSelect={(n) => {
+            setShotCount(n);
+            setPhotos([]);
+            setStep("filter");
+          }}
+        />
       );
 
     case "filter":
@@ -68,6 +73,7 @@ export function PhotoBooth() {
           selected={filterId} 
           onSelect={setFilterId} 
           onNext={() => setStep(mode === "camera" ? "camera" : "upload")} 
+          onBack={() => setStep("count")}
         />
       );
 
@@ -88,19 +94,18 @@ export function PhotoBooth() {
           photos={photos}
           onUpdate={setPhotos}
           onDone={() => setStep("template")} 
+          onBack={() => setStep("filter")}
         />
       );
 
     case "template":
       return (
-        <div className="relative">
-          <TemplateSelect selected={templateId} onSelect={(id) => setTemplateId(id)} />
-          <div className="fixed bottom-24 left-0 right-0 flex justify-center z-50">
-            <button onClick={() => setStep("editor")} className="pixel-btn pixel-btn-green text-xs">
-              ✅ Continue to Editor
-            </button>
-          </div>
-        </div>
+        <TemplateSelect
+          selected={templateId}
+          onSelect={(id) => setTemplateId(id)}
+          onContinue={() => setStep("editor")}
+          onBack={() => setStep(mode === "camera" ? "camera" : "upload")}
+        />
       );
 
     case "editor":
@@ -110,20 +115,13 @@ export function PhotoBooth() {
           templateId={templateId}
           onFinish={(canvas) => {
             setFinalImage(canvas.toDataURL("image/png"));
-            setStep("print");
+            setStep("download");
           }} 
+          onBack={() => setStep("template")}
         />
       );
 
     case "print":
-      return (
-        <PrintExperience 
-          photos={photos} 
-          templateId={templateId}
-          onDone={(url) => { setFinalImage(url); setStep("download"); }} 
-        />
-      );
-
     case "download":
       return <DownloadScreen imageUrl={finalImage} onRetake={reset} />;
 
